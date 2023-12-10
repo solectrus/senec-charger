@@ -1,20 +1,44 @@
+GIT
+  remote: https://github.com/solectrus/senec.git
+  revision: 1b921a368ca4d9c9de7af0652d86165dbbafd0c0
+  specs:
+    senec (0.13.0)
+      faraday
+      faraday-net_http_persistent
+      faraday-request-timer
+
 GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
+    base64 (0.2.0)
     climate_control (1.2.0)
+    connection_pool (2.4.1)
     crack (0.4.5)
       rexml
     docile (1.4.0)
     dotenv (2.8.1)
+    faraday (2.7.12)
+      base64
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-net_http (3.0.2)
+    faraday-net_http_persistent (2.1.0)
+      faraday (~> 2.5)
+      net-http-persistent (~> 4.0)
+    faraday-request-timer (0.2.0)
+      faraday (>= 0.9.0)
     hashdiff (1.0.1)
+    influxdb-client (3.0.0)
     json (2.7.1)
     language_server-protocol (3.17.0.3)
     minitest (5.20.0)
     minitest-silence (0.2.4)
       minitest (~> 5.12)
+    net-http-persistent (4.0.2)
+      connection_pool (~> 2.2)
     parallel (1.23.0)
     parser (3.2.2.4)
       ast (~> 2.4.1)
@@ -48,6 +72,7 @@ GEM
     rubocop-rake (0.6.0)
       rubocop (~> 1.0)
     ruby-progressbar (1.13.0)
+    ruby2_keywords (0.0.5)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -67,6 +92,7 @@ PLATFORMS
 DEPENDENCIES
   climate_control
   dotenv
+  influxdb-client
   minitest
   minitest-silence
   rake
@@ -75,6 +101,7 @@ DEPENDENCIES
   rubocop-minitest
   rubocop-performance
   rubocop-rake
+  senec!
   simplecov
   vcr
   webmock

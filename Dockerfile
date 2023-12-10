@@ -1,5 +1,5 @@
 FROM ruby:3.2.2-alpine AS Builder
-RUN apk add --no-cache build-base
+RUN apk add --no-cache build-base git
 
 WORKDIR /senec-charger
 COPY Gemfile* /senec-charger/
