@@ -1,0 +1,2 @@
+[![Continuous integration](https://github.com/solectrus/senec-charger/actions/workflows/push.yml/badge.svg)](https://github.com/solectrus/senec-charger/actions/workflows/push.yml)
+[![wakatime](https://wakatime.com/badge/user/697af4f5-617a-446d-ba58-407e7f3e0243/project/018c5239-d626-4755-b81b-a7c7006ebabb.svg)](https://wakatime.com/badge/user/697af4f5-617a-446d-ba58-407e7f3e0243/project/018c5239-d626-4755-b81b-a7c7006ebabb)
