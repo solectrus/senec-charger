@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/solectrus/senec.git
-  revision: 1b921a368ca4d9c9de7af0652d86165dbbafd0c0
+  revision: 86307ab9ac99fcd00db3b23a35e23b3c15a5def3
   specs:
     senec (0.13.0)
       faraday
