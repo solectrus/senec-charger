@@ -45,4 +45,7 @@ group :development, :test do
 
   # Code coverage for Ruby (https://github.com/simplecov-ruby/simplecov)
   gem 'simplecov'
+
+  # A gem providing "time travel" and "time freezing" capabilities, making it dead simple to test time-dependent code.  It provides a unified method to mock Time.now, Date.today, and DateTime.now in a single call. (https://github.com/travisjeffery/timecop)
+  gem 'timecop'
 end

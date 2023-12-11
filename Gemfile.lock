@@ -74,6 +74,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
+    timecop (0.9.8)
     unicode-display_width (2.5.0)
     vcr (6.2.0)
     webmock (3.19.1)
@@ -98,6 +99,7 @@ DEPENDENCIES
   rubocop-rake
   senec
   simplecov
+  timecop
   vcr
   webmock
 

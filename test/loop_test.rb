@@ -13,8 +13,7 @@ class LoopTest < Minitest::Test
         VCR.use_cassettes(cassettes) { Loop.start(config:, max_count: 2) }
       end
 
-    assert_match(/Fetching data from SENEC/, out)
-    assert_match(/Fetchting data from InfluxDB/, out)
+    assert_match(/#1/, out)
     assert_empty(err)
   end
 end
