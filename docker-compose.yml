@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   senec-charger:
-    image: ghcr.io/solectrus/senec-charger:develop
+    image: ghcr.io/solectrus/senec-charger:latest
     depends_on:
       influxdb:
         condition: service_healthy
