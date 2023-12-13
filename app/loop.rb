@@ -22,7 +22,10 @@ class Loop
 
     loop do
       self.count += 1
-      battery_action.perform!(count:)
+
+      puts "##{self.count} - #{Time.now}"
+      result = battery_action.perform!
+      puts RESULT_MESSAGES[result]
 
       break if max_count && count >= max_count
 
@@ -31,6 +34,15 @@ class Loop
       puts
     end
   end
+
+  RESULT_MESSAGES = {
+    start_charge: 'Start charge!',
+    allow_discharge: 'Allow discharge!',
+    still_charging: 'Still charging, nothing to do',
+    sunshine_ahead: 'Sunshine ahead, nothing to do',
+    grid_power_not_cheap: 'Grid power not cheap, nothing to do',
+    not_empty: 'Battery not empty, nothing to do',
+  }.freeze
 
   private
 

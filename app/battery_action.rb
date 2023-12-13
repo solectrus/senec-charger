@@ -9,6 +9,21 @@ class BatteryAction
     @forecast = forecast
   end
 
+  def perform!
+    result = determine_result
+
+    case result
+    when :start_charge
+      senec.start_charge!
+    when :allow_discharge
+      senec.allow_discharge!
+    end
+
+    result
+  end
+
+  private
+
   attr_reader :senec, :prices, :forecast
 
   def_delegators :senec,
@@ -19,59 +34,17 @@ class BatteryAction
   def_delegators :prices, :cheap_grid_power?
   def_delegators :forecast, :sunshine_ahead?
 
-  def perform!(count: 1) # rubocop:disable Metrics/PerceivedComplexity
-    puts "##{count} - #{Time.now}"
-
+  def determine_result
     if safe_charge_running?
-      info 'Battery is safe charging'
-
-      if bat_fuel_charge_increased?
-        noop "Still charging (#{bat_fuel_charge} %)"
-      else
-        info 'Battery fuel charge not increased'
-        allow_discharge!
-      end
-
-      return
-    end
-
-    if bat_empty?
-      info 'Battery is empty'
-
+      bat_fuel_charge_increased? ? :still_charging : :allow_discharge
+    elsif bat_empty?
       if sunshine_ahead?
-        noop 'Sunshine ahead'
+        :sunshine_ahead
       else
-        info 'No sunshine ahead'
-
-        if cheap_grid_power?
-          info 'Grid power is cheap'
-          start_charge!
-        else
-          noop 'Grid power expensive'
-        end
+        cheap_grid_power? ? :start_charge : :grid_power_not_cheap
       end
     else
-      noop "Battery not empty (#{bat_fuel_charge} %)"
+      :not_empty
     end
-  end
-
-  private
-
-  def start_charge!
-    puts '- Start charge!'
-    senec.start_charge!
-  end
-
-  def allow_discharge!
-    puts '- Allow discharge!'
-    senec.allow_discharge!
-  end
-
-  def info(message)
-    print "#{message} | "
-  end
-
-  def noop(message)
-    puts "#{message} - nothing to do"
   end
 end
