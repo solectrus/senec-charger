@@ -6,6 +6,7 @@
 # SENEC-Charger
 
 Automated low-cost grid charging for SENEC Home V3 / V2.1 and Tibber dynamic electricity tariff
+
 It charges your battery when electricity is cheap and there is no sunshine in sight.
 
 ```mermaid
@@ -27,29 +28,25 @@ flowchart
 
 - SENEC.Home V3 or V2.1
 - Dynamic electricity tariff from [Tibber](https://tibber.com)
-- [SENEC-Collector](https://github.com/solectrus/senec-collector)
-- [Tibber-Collector](https://github.com/solectrus/tibber-collector)
-- [Forecast-Collector](https://github.com/solectrus/forecast-collector)
-- InfluxDB database
 
 ## Usage
 
-1. Make sure your InfluxDB database is ready (not subject of this README)
+1. Prepare an `.env` file (see `.env.example`)
 
-2. Prepare an `.env` file (see `.env.example`) with your InfluxDB credentials and IP address of your SENEC Home V2/V3
-
-3. Run the Docker container on your Linux box:
+2. Run the Docker containers on your Linux box:
 
    ```bash
-   docker run -it --rm \
-              --env-file .env \
-              ghcr.io/solectrus/senec-charger:latest
+   docker compose up
    ```
 
-It's recommended to integrate the `senec-charger` into your SOLECTRUS hosting. See more here:
-https://github.com/solectrus/hosting
+This setup uses the following other Docker services:
+
+- [Tibber-Collector](https://github.com/solectrus/tibber-collector)
+- [Forecast-Collector](https://github.com/solectrus/forecast-collector)
+- [InfluxDB v2](https://hub.docker.com/_/influxdb)
 
 ## License
 
 Copyright (c) 2023 Georg Ledermann, released under the MIT License
+
 Sponsored by [EP: Bölsche Frikom GmbH](https://www.ep.de/boelsche)

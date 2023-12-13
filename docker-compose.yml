@@ -1,0 +1,107 @@
+version: '3.7'
+
+services:
+  senec-charger:
+    image: ghcr.io/solectrus/senec-charger:develop
+    depends_on:
+      influxdb:
+        condition: service_healthy
+    links:
+      - influxdb
+    environment:
+      - SENEC_HOST
+      - SENEC_SCHEMA
+      - CHARGER_INTERVAL
+      - INFLUX_HOST=influxdb
+      - INFLUX_TOKEN=${INFLUX_TOKEN_READ}
+      - INFLUX_ORG
+      - INFLUX_BUCKET
+      - INFLUX_MEASUREMENT_PRICES=${INFLUX_MEASUREMENT_PRICES}
+      - INFLUX_MEASUREMENT_FORECAST=${INFLUX_MEASUREMENT_FORECAST}
+    restart: always
+
+  forecast-collector:
+    image: ghcr.io/solectrus/forecast-collector:latest
+    depends_on:
+      influxdb:
+        condition: service_healthy
+    links:
+      - influxdb
+    environment:
+      - INFLUX_HOST=influxdb
+      - INFLUX_TOKEN=${INFLUX_TOKEN_WRITE}
+      - INFLUX_ORG
+      - INFLUX_BUCKET
+      - INFLUX_MEASUREMENT=${INFLUX_MEASUREMENT_FORECAST}
+      - FORECAST_LATITUDE
+      - FORECAST_LONGITUDE
+      - FORECAST_DECLINATION
+      - FORECAST_AZIMUTH
+      - FORECAST_KWP
+      - FORECAST_CONFIGURATIONS
+      - FORECAST_0_LATITUDE
+      - FORECAST_0_LONGITUDE
+      - FORECAST_0_DECLINATION
+      - FORECAST_0_AZIMUTH
+      - FORECAST_0_KWP
+      - FORECAST_0_DAMPING_MORNING
+      - FORECAST_0_DAMPING_EVENING
+      - FORECAST_1_LATITUDE
+      - FORECAST_1_LONGITUDE
+      - FORECAST_1_DECLINATION
+      - FORECAST_1_AZIMUTH
+      - FORECAST_1_KWP
+      - FORECAST_1_DAMPING_MORNING
+      - FORECAST_1_DAMPING_EVENING
+      - FORECAST_2_LATITUDE
+      - FORECAST_2_LONGITUDE
+      - FORECAST_2_DECLINATION
+      - FORECAST_2_AZIMUTH
+      - FORECAST_2_KWP
+      - FORECAST_2_DAMPING_MORNING
+      - FORECAST_2_DAMPING_EVENING
+      - FORECAST_3_LATITUDE
+      - FORECAST_3_LONGITUDE
+      - FORECAST_3_DECLINATION
+      - FORECAST_3_AZIMUTH
+      - FORECAST_3_KWP
+      - FORECAST_3_DAMPING_MORNING
+      - FORECAST_3_DAMPING_EVENING
+      - FORECAST_INTERVAL
+      - FORECAST_SOLAR_APIKEY
+    restart: always
+
+  tibber-collector:
+    image: ghcr.io/solectrus/tibber-collector:latest
+    depends_on:
+      influxdb:
+        condition: service_healthy
+    links:
+      - influxdb
+    environment:
+      - INFLUX_HOST=influxdb
+      - INFLUX_TOKEN=${INFLUX_TOKEN_WRITE}
+      - INFLUX_ORG
+      - INFLUX_BUCKET
+      - INFLUX_MEASUREMENT=${INFLUX_MEASUREMENT_PRICES}
+      - TIBBER_TOKEN
+      - TIBBER_INTERVAL
+    restart: always
+
+  influxdb:
+    image: influxdb:2.7-alpine
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUX_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUX_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUX_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUX_BUCKET}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUX_ADMIN_TOKEN}
+    command: influxd run --bolt-path /var/lib/influxdb2/influxd.bolt --engine-path /var/lib/influxdb2/engine --store disk
+    restart: always
+    healthcheck:
+      test: ['CMD', 'influx', 'ping']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
