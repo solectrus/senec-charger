@@ -11,7 +11,7 @@ class ConfigTest < Minitest::Test
     influx_token: 'this.is.just.an.example',
     influx_org: 'my-org',
     influx_bucket: 'my-bucket',
-    influx_measurement_prices: 'my-measurement-prices',
+    influx_measurement_prices: 'my-prices',
     influx_measurement_forecast: 'my-forecast',
   }.freeze
 
@@ -52,7 +52,7 @@ class ConfigTest < Minitest::Test
     assert_equal 'this.is.just.an.example', config.influx_token
     assert_equal 'my-org', config.influx_org
     assert_equal 'my-bucket', config.influx_bucket
-    assert_equal 'my-measurement-prices', config.influx_measurement_prices
+    assert_equal 'my-prices', config.influx_measurement_prices
     assert_equal 'my-forecast', config.influx_measurement_forecast
   end
 
@@ -65,7 +65,7 @@ class ConfigTest < Minitest::Test
     assert_equal 'my-token', config.influx_token
     assert_equal 'my-org', config.influx_org
     assert_equal 'my-bucket', config.influx_bucket
-    assert_equal 'my-measurement-prices', config.influx_measurement_prices
+    assert_equal 'my-prices', config.influx_measurement_prices
     assert_equal 'my-forecast', config.influx_measurement_forecast
   end
 end
