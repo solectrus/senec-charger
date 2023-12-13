@@ -2,7 +2,7 @@ Config =
   Struct.new(
     :senec_host,
     :senec_schema,
-    :senec_interval,
+    :charger_interval,
     :influx_schema,
     :influx_host,
     :influx_port,
@@ -18,7 +18,7 @@ Config =
 
       validate_url!(senec_url)
       validate_url!(influx_url)
-      validate_interval!(senec_interval)
+      validate_interval!(charger_interval)
     end
 
     def influx_url
@@ -36,10 +36,10 @@ Config =
 
     private
 
-    def validate_interval!(interval)
-      return if interval.is_a?(Integer) && interval.positive?
+    def validate_interval!(charger_interval)
+      return if charger_interval.is_a?(Integer) && charger_interval.positive?
 
-      throw "Interval is invalid: #{interval}"
+      throw "Interval is invalid: #{charger_interval}"
     end
 
     def validate_url!(url)
@@ -53,8 +53,8 @@ Config =
       new(
         {
           senec_host: ENV.fetch('SENEC_HOST'),
-          senec_schema: ENV.fetch('SENEC_SCHEMA', 'http'),
-          senec_interval: ENV.fetch('SENEC_INTERVAL').to_i,
+          senec_schema: ENV.fetch('SENEC_SCHEMA', 'https'),
+          charger_interval: ENV.fetch('CHARGER_INTERVAL', '3600').to_i,
           influx_host: ENV.fetch('INFLUX_HOST'),
           influx_schema: ENV.fetch('INFLUX_SCHEMA', 'http'),
           influx_port: ENV.fetch('INFLUX_PORT', '8086'),

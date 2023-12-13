@@ -3,7 +3,7 @@ require 'test_helper'
 class ConfigTest < Minitest::Test
   VALID_OPTIONS = {
     senec_host: '192.168.1.2',
-    senec_interval: 900,
+    charger_interval: 1800,
     senec_schema: 'http',
     influx_host: 'influx.example.com',
     influx_schema: 'https',
@@ -24,7 +24,7 @@ class ConfigTest < Minitest::Test
 
     error =
       assert_raises(Exception) do
-        Config.new(VALID_OPTIONS.merge(senec_interval: 0))
+        Config.new(VALID_OPTIONS.merge(charger_interval: 0))
       end
 
     assert_match(/Interval is invalid/, error.message)
@@ -40,7 +40,7 @@ class ConfigTest < Minitest::Test
   def test_senec_methods
     config = Config.new(VALID_OPTIONS)
 
-    assert_equal 900, config.senec_interval
+    assert_equal 1800, config.charger_interval
   end
 
   def test_influx_methods

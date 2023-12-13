@@ -29,8 +29,8 @@ class Loop
 
       break if max_count && count >= max_count
 
-      puts "Sleeping for #{config.senec_interval} seconds ..."
-      sleep config.senec_interval
+      puts "Sleeping for #{config.charger_interval} seconds ..."
+      sleep config.charger_interval
       puts
     end
   end

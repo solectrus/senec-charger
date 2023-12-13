@@ -17,7 +17,7 @@ puts "\n"
 config = Config.from_env
 
 puts "Using Ruby #{RUBY_VERSION} on platform #{RUBY_PLATFORM}"
-puts "Checking SENEC at #{config.senec_url} every #{config.senec_interval} seconds"
+puts "Connecting to SENEC at #{config.senec_url}"
 puts "Connecting to InfluxDB at #{config.influx_url}, " \
        "bucket #{config.influx_bucket}, " \
        "measurements #{config.influx_measurement_prices} and #{config.influx_measurement_forecast}"
