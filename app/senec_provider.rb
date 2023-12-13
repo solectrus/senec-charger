@@ -8,7 +8,8 @@ class SenecProvider
   attr_reader :config
 
   def bat_fuel_charge
-    request.get('ENERGY', 'GUI_BAT_DATA_FUEL_CHARGE')
+    refresh_request
+    @bat_fuel_charge
   end
 
   def bat_empty?
@@ -16,41 +17,60 @@ class SenecProvider
   end
 
   def safe_charge_running?
-    request.get('ENERGY', 'SAFE_CHARGE_RUNNING') == 1
+    refresh_request
+    @safe_charge_running
   end
 
   def bat_fuel_charge_increased?
-    @former_bat_fuel_charge && @former_bat_fuel_charge < bat_fuel_charge
+    # If we don't have a former value, we assume the charge has increased
+    return true unless @former_bat_fuel_charge
+
+    @former_bat_fuel_charge < bat_fuel_charge
   end
 
   def start_charge!
-    # Logic for starting safe charging
+    Senec::Local::Request.new(
+      connection: config.senec_connection,
+      body: Senec::Local::SAFETY_CHARGE,
+    ).perform!
   end
 
   def allow_discharge!
-    # Logic for allowing discharging
+    Senec::Local::Request.new(
+      connection: config.senec_connection,
+      body: Senec::Local::ALLOW_DISCHARGE,
+    ).perform!
   end
 
   private
 
-  def request
-    return @request if fresh?
+  def refresh_request
+    return if request_still_valid?
 
-    @former_bat_fuel_charge = bat_fuel_charge if @request
-    @last_request_at = Time.now
-
-    @request =
-      Senec::Local::Request.new connection: config.senec_connection,
-                                body: {
-                                  ENERGY: {
-                                    GUI_BAT_DATA_FUEL_CHARGE: '',
-                                    SAFE_CHARGE_RUNNING: '',
-                                  },
-                                }
+    remember_request
+    request = create_new_data_request
+    @bat_fuel_charge = request.get('ENERGY', 'GUI_BAT_DATA_FUEL_CHARGE')
+    @safe_charge_running = request.get('ENERGY', 'SAFE_CHARGE_RUNNING') == 1
   end
 
-  # Is the last request less than 5 seconds ago?
-  def fresh?
-    @request && @last_request_at && @last_request_at > Time.now - 5
+  def request_still_valid?
+    @last_request_at && @last_request_at > Time.now - 5
+  end
+
+  def remember_request
+    @former_bat_fuel_charge = @bat_fuel_charge
+    @last_request_at = Time.now
+  end
+
+  def create_new_data_request
+    Senec::Local::Request.new(
+      connection: config.senec_connection,
+      body: {
+        ENERGY: {
+          GUI_BAT_DATA_FUEL_CHARGE: '',
+          SAFE_CHARGE_RUNNING: '',
+        },
+      },
+    )
   end
 end
