@@ -7,7 +7,7 @@ gem 'dotenv'
 gem 'influxdb-client'
 
 # Unofficial Ruby Client for SENEC Home (https://github.com/solectrus/senec)
-gem 'senec', github: 'solectrus/senec'
+gem 'senec'
 
 group :development, :test do
   # Rake is a Make-like program implemented in Ruby (https://github.com/ruby/rake)
