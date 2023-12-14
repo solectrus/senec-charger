@@ -8,7 +8,7 @@ class ForecastProvider
   attr_reader :config
 
   def sunshine_ahead?
-    total_in_kwh > 20
+    total_in_kwh > config.charger_forecast_threshold
   end
 
   def total_in_kwh

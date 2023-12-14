@@ -7,10 +7,8 @@ class PricesProvider
 
   attr_reader :config
 
-  ACCEPTED_LEVELS = %w[CHEAP VERY_CHEAP].freeze
-
   def cheap_grid_power?
-    levels.count { |level| ACCEPTED_LEVELS.include?(level) } >= 4
+    levels.count { |level| accepted_levels.include?(level) } >= time_range
   end
 
   def levels
@@ -20,6 +18,19 @@ class PricesProvider
   end
 
   private
+
+  def time_range
+    config.charger_price_time_range
+  end
+
+  def accepted_levels
+    case config.charger_price_mode
+    when :strict
+      %w[VERY_CHEAP]
+    when :relaxed
+      %w[CHEAP VERY_CHEAP]
+    end
+  end
 
   def raw
     # Is the last request less than 30min ago?
@@ -31,7 +42,7 @@ class PricesProvider
 
   def query
     "from(bucket: \"#{config.influx_bucket}\")
-      |> range(start: now(), stop: 4h)
+      |> range(start: now(), stop: #{time_range}h)
       |> filter(fn: (r) => r[\"_measurement\"] == \"#{config.influx_measurement_prices}\")
       |> filter(fn: (r) => r[\"_field\"] == \"#{field}\")
       |> yield()
