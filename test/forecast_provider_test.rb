@@ -1,6 +1,4 @@
 require 'test_helper'
-require 'forecast_provider'
-require 'config'
 
 class ForecastProviderTest < Minitest::Test
   def test_success_request

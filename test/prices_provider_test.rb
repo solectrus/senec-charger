@@ -1,6 +1,4 @@
 require 'test_helper'
-require 'prices_provider'
-require 'config'
 
 class PricesProviderTest < Minitest::Test
   def test_success_request

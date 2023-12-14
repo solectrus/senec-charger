@@ -1,6 +1,4 @@
 require 'test_helper'
-require 'senec_provider'
-require 'config'
 
 class SenecProviderTest < Minitest::Test
   def test_success_request
