@@ -84,6 +84,7 @@ services:
     links:
       - influxdb
     environment:
+      - TZ
       - INFLUX_HOST=influxdb
       - INFLUX_TOKEN=${INFLUX_TOKEN_WRITE}
       - INFLUX_ORG
