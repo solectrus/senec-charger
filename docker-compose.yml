@@ -9,6 +9,7 @@ services:
     links:
       - influxdb
     environment:
+      - TZ
       - SENEC_HOST
       - SENEC_SCHEMA
       - CHARGER_INTERVAL
