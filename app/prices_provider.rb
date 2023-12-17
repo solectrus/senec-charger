@@ -41,12 +41,13 @@ class PricesProvider
   end
 
   def query
-    "from(bucket: \"#{config.influx_bucket}\")
+    <<~QUERY
+      from(bucket: "#{config.influx_bucket}")
       |> range(start: now(), stop: #{time_range}h)
-      |> filter(fn: (r) => r[\"_measurement\"] == \"#{config.influx_measurement_prices}\")
-      |> filter(fn: (r) => r[\"_field\"] == \"#{field}\")
+      |> filter(fn: (r) => r["_measurement"] == "#{config.influx_measurement_prices}")
+      |> filter(fn: (r) => r["_field"] == "#{field}")
       |> yield()
-    "
+    QUERY
   end
 
   def field

@@ -5,9 +5,9 @@ http_interactions:
     uri: http://localhost:8086/api/v2/query?org=my-org
     body:
       encoding: UTF-8
-      string: '{"query":"from(bucket: \"my-bucket\")\n      |> range(start: now(),
-        stop: 4h)\n      |> filter(fn: (r) => r[\"_measurement\"] == \"my-prices\")\n      |>
-        filter(fn: (r) => r[\"_field\"] == \"level\")\n      |> yield()\n    ","dialect":{"header":true,"delimiter":",","annotations":["datatype","group","default"],"commentPrefix":"#","dateTimeFormat":"RFC3339"}}'
+      string: '{"query":"from(bucket: \"my-bucket\")\n|> range(start: now(), stop:
+        4h)\n|> filter(fn: (r) => r[\"_measurement\"] == \"my-prices\")\n|> filter(fn:
+        (r) => r[\"_field\"] == \"level\")\n|> yield()\n","dialect":{"header":true,"delimiter":",","annotations":["datatype","group","default"],"commentPrefix":"#","dateTimeFormat":"RFC3339"}}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3

@@ -5,11 +5,11 @@ http_interactions:
     uri: http://localhost:8086/api/v2/query?org=my-org
     body:
       encoding: UTF-8
-      string: '{"query":"from(bucket: \"my-bucket\")\n      |> range(start: now(),
-        stop: 24h)\n      |> filter(fn: (r) => r[\"_measurement\"] == \"my-forecast\")\n      |>
-        filter(fn: (r) => r[\"_field\"] == \"watt\")\n      |> aggregateWindow(every:
-        1h, fn: mean, createEmpty: false)\n      |> map(fn: (r) => ({ r with _value:
-        r._value / 1000.0 }))\n      |> sum()\n    ","dialect":{"header":true,"delimiter":",","annotations":["datatype","group","default"],"commentPrefix":"#","dateTimeFormat":"RFC3339"}}'
+      string: '{"query":"from(bucket: \"my-bucket\")\n|> range(start: now(), stop:
+        24h)\n|> filter(fn: (r) => r[\"_measurement\"] == \"my-forecast\")\n|> filter(fn:
+        (r) => r[\"_field\"] == \"watt\")\n|> aggregateWindow(every: 1h, fn: mean,
+        createEmpty: false)\n|> map(fn: (r) => ({ r with _value: r._value / 1000.0
+        }))\n|> sum()\n","dialect":{"header":true,"delimiter":",","annotations":["datatype","group","default"],"commentPrefix":"#","dateTimeFormat":"RFC3339"}}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
