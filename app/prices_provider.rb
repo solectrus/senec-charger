@@ -77,11 +77,20 @@ class PricesProvider
   def query
     <<~QUERY
       from(bucket: "#{config.influx_bucket}")
-      |> range(start: now(), stop: #{time_range}h)
+      |> range(start: #{range_start.to_i}, stop: #{range_stop.to_i})
       |> filter(fn: (r) => r["_measurement"] == "#{config.influx_measurement_prices}")
       |> filter(fn: (r) => r["_field"] == "level" or r["_field"] == "amount")
       |> yield()
     QUERY
+  end
+
+  def range_start
+    now = Time.now
+    Time.new(now.year, now.month, now.day, now.hour)
+  end
+
+  def range_stop
+    range_start + (time_range * 3600)
   end
 
   def client

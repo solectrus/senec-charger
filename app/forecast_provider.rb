@@ -34,13 +34,21 @@ class ForecastProvider
   def query
     <<~QUERY
       from(bucket: "#{config.influx_bucket}")
-      |> range(start: now(), stop: #{time_range}h)
+      |> range(start: #{range_start.to_i}, stop: #{range_stop.to_i})
       |> filter(fn: (r) => r["_measurement"] == "#{config.influx_measurement_forecast}")
       |> filter(fn: (r) => r["_field"] == "#{field}")
       |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
       |> map(fn: (r) => ({ r with _value: r._value / 1000.0 }))
       |> sum()
     QUERY
+  end
+
+  def range_start
+    Time.now
+  end
+
+  def range_stop
+    range_start + (time_range * 3600)
   end
 
   def field
