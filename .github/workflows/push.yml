@@ -21,6 +21,7 @@ jobs:
     env:
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       CI: true
+      TZ: Europe/Berlin
 
     steps:
       - name: Checkout the code

@@ -29,6 +29,8 @@ class SenecProvider
   end
 
   def start_charge!
+    return if config.charger_dry_run
+
     Senec::Local::Request.new(
       connection: config.senec_connection,
       body: Senec::Local::SAFETY_CHARGE,
@@ -36,6 +38,8 @@ class SenecProvider
   end
 
   def allow_discharge!
+    return if config.charger_dry_run
+
     Senec::Local::Request.new(
       connection: config.senec_connection,
       body: Senec::Local::ALLOW_DISCHARGE,
@@ -49,12 +53,14 @@ class SenecProvider
 
     remember_request
     request = create_new_data_request
-    @bat_fuel_charge = request.get('ENERGY', 'GUI_BAT_DATA_FUEL_CHARGE')
+    @bat_fuel_charge =
+      request.get('ENERGY', 'GUI_BAT_DATA_FUEL_CHARGE').round(1)
     @safe_charge_running = request.get('ENERGY', 'SAFE_CHARGE_RUNNING') == 1
   end
 
   def request_still_valid?
-    @last_request_at && @last_request_at > Time.now - 5
+    # Cache for 1 minute
+    @last_request_at && @last_request_at > Time.now - 60
   end
 
   def remember_request

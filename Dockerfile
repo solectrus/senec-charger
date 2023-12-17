@@ -1,5 +1,5 @@
 FROM ruby:3.2.2-alpine AS Builder
-RUN apk add --no-cache build-base git
+RUN apk add --no-cache build-base
 
 WORKDIR /senec-charger
 COPY Gemfile* /senec-charger/
@@ -10,6 +10,9 @@ RUN bundle config --local frozen 1 && \
 
 FROM ruby:3.2.2-alpine
 LABEL maintainer="georg@ledermann.dev"
+
+# Add tzdata to get correct timezone
+RUN apk add --no-cache tzdata
 
 # Decrease memory usage
 ENV MALLOC_ARENA_MAX 2

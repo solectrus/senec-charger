@@ -1,6 +1,4 @@
 require 'test_helper'
-require 'senec_provider'
-require 'config'
 
 class SenecProviderTest < Minitest::Test
   def test_success_request
@@ -23,8 +21,8 @@ class SenecProviderTest < Minitest::Test
 
     assert_in_delta 12.1, senec_provider.bat_fuel_charge
 
-    # Forward 10 seconds, so the request is not fresh anymore, a new request is made
-    Timecop.travel(10)
+    # Forward 60 seconds, so the request is not fresh anymore, a new request is made
+    Timecop.travel(60)
 
     with_stubbed_request(bat_fuel_charge: 15.0) do
       assert_in_delta 15.0, senec_provider.bat_fuel_charge

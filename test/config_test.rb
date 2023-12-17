@@ -4,6 +4,9 @@ class ConfigTest < Minitest::Test
   VALID_OPTIONS = {
     senec_host: '192.168.1.2',
     charger_interval: 1800,
+    charger_price_time_range: 3,
+    charger_price_mode: :relaxed,
+    charger_forecast_threshold: 15,
     senec_schema: 'http',
     influx_host: 'influx.example.com',
     influx_schema: 'https',
@@ -19,22 +22,53 @@ class ConfigTest < Minitest::Test
     Config.new(VALID_OPTIONS)
   end
 
-  def test_invalid_options
+  def test_invalid_options_blank
     assert_raises(Exception) { Config.new({}) }
+  end
 
+  def test_invalid_options_charger_interval
     error =
       assert_raises(Exception) do
         Config.new(VALID_OPTIONS.merge(charger_interval: 0))
       end
 
     assert_match(/Interval is invalid/, error.message)
+  end
 
+  def test_invalid_options_influx_schema
     error =
       assert_raises(Exception) do
         Config.new(VALID_OPTIONS.merge(influx_schema: 'foo'))
       end
 
     assert_match(/URL is invalid/, error.message)
+  end
+
+  def test_invalid_options_price_mode
+    error =
+      assert_raises(Exception) do
+        Config.new(VALID_OPTIONS.merge(charger_price_mode: 'foo'))
+      end
+
+    assert_match(/Price mode is invalid/, error.message)
+  end
+
+  def test_invalid_options_price_time_range
+    error =
+      assert_raises(Exception) do
+        Config.new(VALID_OPTIONS.merge(charger_price_time_range: '-2'))
+      end
+
+    assert_match(/Time range is invalid/, error.message)
+  end
+
+  def test_invalid_options_forecast_threshold
+    error =
+      assert_raises(Exception) do
+        Config.new(VALID_OPTIONS.merge(charger_forecast_threshold: '-20'))
+      end
+
+    assert_match(/Forecast threshold is invalid/, error.message)
   end
 
   def test_senec_methods

@@ -5,9 +5,10 @@ http_interactions:
     uri: http://localhost:8086/api/v2/query?org=my-org
     body:
       encoding: UTF-8
-      string: '{"query":"from(bucket: \"my-bucket\")\n      |> range(start: now(),
-        stop: 4h)\n      |> filter(fn: (r) => r[\"_measurement\"] == \"my-prices\")\n      |>
-        filter(fn: (r) => r[\"_field\"] == \"level\")\n      |> yield()\n    ","dialect":{"header":true,"delimiter":",","annotations":["datatype","group","default"],"commentPrefix":"#","dateTimeFormat":"RFC3339"}}'
+      string: '{"query":"from(bucket: \"my-bucket\")\n|> range(start: 1701421200,
+        stop: 1701435600)\n|> filter(fn: (r) => r[\"_measurement\"] == \"my-prices\")\n|>
+        filter(fn: (r) => r[\"_field\"] == \"level\" or r[\"_field\"] == \"amount\")\n|>
+        yield()\n","dialect":{"header":true,"delimiter":",","annotations":["datatype","group","default"],"commentPrefix":"#","dateTimeFormat":"RFC3339"}}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -33,11 +34,11 @@ http_interactions:
       X-Influxdb-Version:
       - v2.7.4
       Date:
-      - Tue, 12 Dec 2023 18:01:02 GMT
+      - Sun, 17 Dec 2023 12:19:51 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,string,string,string\r\n#group,false,false,true,true,false,false,true,true\r\n#default,_result,,,,,,,\r\n,result,table,_start,_stop,_time,_value,_field,_measurement\r\n,,0,2023-12-12T18:01:02.272093971Z,2023-12-12T22:01:02.272093971Z,2023-12-12T19:00:00Z,NORMAL,level,my-prices\r\n,,0,2023-12-12T18:01:02.272093971Z,2023-12-12T22:01:02.272093971Z,2023-12-12T20:00:00Z,NORMAL,level,my-prices\r\n,,0,2023-12-12T18:01:02.272093971Z,2023-12-12T22:01:02.272093971Z,2023-12-12T21:00:00Z,NORMAL,level,my-prices\r\n,,0,2023-12-12T18:01:02.272093971Z,2023-12-12T22:01:02.272093971Z,2023-12-12T22:00:00Z,CHEAP,level,my-prices\r\n\r\n"
-  recorded_at: Tue, 12 Dec 2023 18:01:02 GMT
+      string: "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string\r\n#group,false,false,true,true,false,false,true,true\r\n#default,_result,,,,,,,\r\n,result,table,_start,_stop,_time,_value,_field,_measurement\r\n,,0,2023-12-01T09:00:00Z,2023-12-01T13:00:00Z,2023-12-01T09:00:00Z,0.157,amount,my-prices\r\n,,0,2023-12-01T09:00:00Z,2023-12-01T13:00:00Z,2023-12-01T10:00:00Z,0.172,amount,my-prices\r\n,,0,2023-12-01T09:00:00Z,2023-12-01T13:00:00Z,2023-12-01T11:00:00Z,0.153,amount,my-prices\r\n,,0,2023-12-01T09:00:00Z,2023-12-01T13:00:00Z,2023-12-01T12:00:00Z,0.176,amount,my-prices\r\n\r\n#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,string,string,string\r\n#group,false,false,true,true,false,false,true,true\r\n#default,_result,,,,,,,\r\n,result,table,_start,_stop,_time,_value,_field,_measurement\r\n,,1,2023-12-01T09:00:00Z,2023-12-01T13:00:00Z,2023-12-01T09:00:00Z,CHEAP,level,my-prices\r\n,,1,2023-12-01T09:00:00Z,2023-12-01T13:00:00Z,2023-12-01T10:00:00Z,VERY_CHEAP,level,my-prices\r\n,,1,2023-12-01T09:00:00Z,2023-12-01T13:00:00Z,2023-12-01T11:00:00Z,VERY_CHEAP,level,my-prices\r\n,,1,2023-12-01T09:00:00Z,2023-12-01T13:00:00Z,2023-12-01T12:00:00Z,VERY_CHEAP,level,my-prices\r\n\r\n"
+  recorded_at: Fri, 01 Dec 2023 09:30:00 GMT
 recorded_with: VCR 6.2.0

@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:8086/api/v2/query?org=my-org
+    body:
+      encoding: UTF-8
+      string: '{"query":"from(bucket: \"my-bucket\")\n|> range(start: 1683021600,
+        stop: 1683036000)\n|> filter(fn: (r) => r[\"_measurement\"] == \"my-prices\")\n|>
+        filter(fn: (r) => r[\"_field\"] == \"level\" or r[\"_field\"] == \"amount\")\n|>
+        yield()\n","dialect":{"header":true,"delimiter":",","annotations":["datatype","group","default"],"commentPrefix":"#","dateTimeFormat":"RFC3339"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - influxdb-client-ruby/3.0.0
+      Authorization:
+      - Token <INFLUX_TOKEN>
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/csv; charset=utf-8
+      Vary:
+      - Accept-Encoding
+      X-Influxdb-Build:
+      - OSS
+      X-Influxdb-Version:
+      - v2.7.4
+      Date:
+      - Sun, 17 Dec 2023 12:17:03 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "\r\n"
+  recorded_at: Tue, 02 May 2023 10:10:00 GMT
+recorded_with: VCR 6.2.0

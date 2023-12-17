@@ -21,7 +21,7 @@ GEM
       net-http-persistent (~> 4.0)
     faraday-request-timer (0.2.0)
       faraday (>= 0.9.0)
-    hashdiff (1.0.1)
+    hashdiff (1.1.0)
     influxdb-client (3.0.0)
     json (2.7.1)
     language_server-protocol (3.17.0.3)
@@ -30,7 +30,7 @@ GEM
       minitest (~> 5.12)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    parallel (1.23.0)
+    parallel (1.24.0)
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
@@ -55,11 +55,12 @@ GEM
       parser (>= 3.2.1.0)
     rubocop-graphql (1.4.0)
       rubocop (>= 0.90, < 2)
-    rubocop-minitest (0.33.0)
+    rubocop-minitest (0.34.1)
       rubocop (>= 1.39, < 2.0)
-    rubocop-performance (1.19.1)
-      rubocop (>= 1.7.0, < 2.0)
-      rubocop-ast (>= 0.4.0)
+      rubocop-ast (>= 1.30.0, < 2.0)
+    rubocop-performance (1.20.0)
+      rubocop (>= 1.48.1, < 2.0)
+      rubocop-ast (>= 1.30.0, < 2.0)
     rubocop-rake (0.6.0)
       rubocop (~> 1.0)
     ruby-progressbar (1.13.0)
@@ -104,4 +105,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   2.4.22
+   2.5.1

@@ -5,11 +5,11 @@ http_interactions:
     uri: http://localhost:8086/api/v2/query?org=my-org
     body:
       encoding: UTF-8
-      string: '{"query":"from(bucket: \"my-bucket\")\n      |> range(start: now(),
-        stop: 24h)\n      |> filter(fn: (r) => r[\"_measurement\"] == \"my-forecast\")\n      |>
-        filter(fn: (r) => r[\"_field\"] == \"watt\")\n      |> aggregateWindow(every:
-        1h, fn: mean, createEmpty: false)\n      |> map(fn: (r) => ({ r with _value:
-        r._value / 1000.0 }))\n      |> sum()\n    ","dialect":{"header":true,"delimiter":",","annotations":["datatype","group","default"],"commentPrefix":"#","dateTimeFormat":"RFC3339"}}'
+      string: '{"query":"from(bucket: \"my-bucket\")\n|> range(start: 1701423000,
+        stop: 1701509400)\n|> filter(fn: (r) => r[\"_measurement\"] == \"my-forecast\")\n|>
+        filter(fn: (r) => r[\"_field\"] == \"watt\")\n|> aggregateWindow(every: 1h,
+        fn: mean, createEmpty: false)\n|> map(fn: (r) => ({ r with _value: r._value
+        / 1000.0 }))\n|> sum()\n","dialect":{"header":true,"delimiter":",","annotations":["datatype","group","default"],"commentPrefix":"#","dateTimeFormat":"RFC3339"}}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -35,11 +35,11 @@ http_interactions:
       X-Influxdb-Version:
       - v2.7.4
       Date:
-      - Tue, 12 Dec 2023 17:52:56 GMT
+      - Sun, 17 Dec 2023 12:30:08 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,string,string,double\r\n#group,false,false,true,true,true,true,false\r\n#default,_result,,,,,,\r\n,result,table,_start,_stop,_field,_measurement,_value\r\n,,0,2023-12-12T17:52:56.101982593Z,2023-12-13T17:52:56.101982593Z,watt,my-forecast,15.0405\r\n\r\n"
-  recorded_at: Tue, 12 Dec 2023 17:53:02 GMT
+      string: "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,string,string,double\r\n#group,false,false,true,true,true,true,false\r\n#default,_result,,,,,,\r\n,result,table,_start,_stop,_field,_measurement,_value\r\n,,0,2023-12-01T09:30:00Z,2023-12-02T09:30:00Z,watt,my-forecast,22.1\r\n\r\n"
+  recorded_at: Fri, 01 Dec 2023 09:30:00 GMT
 recorded_with: VCR 6.2.0

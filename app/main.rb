@@ -21,6 +21,7 @@ puts "Connecting to SENEC at #{config.senec_url}"
 puts "Connecting to InfluxDB at #{config.influx_url}, " \
        "bucket #{config.influx_bucket}, " \
        "measurements #{config.influx_measurement_prices} and #{config.influx_measurement_forecast}"
+puts '+++ DRY RUN MODE +++' if config.charger_dry_run
 puts "\n"
 
 Loop.start(config:)
