@@ -24,8 +24,7 @@ class Loop
       self.count += 1
 
       puts "##{self.count} - #{Time.now}"
-      result = battery_action.perform!
-      puts RESULT_MESSAGES[result]
+      perform!
 
       break if max_count && count >= max_count
 
@@ -45,6 +44,36 @@ class Loop
   }.freeze
 
   private
+
+  def perform!
+    result = battery_action.perform!
+    puts RESULT_MESSAGES[result]
+
+    case result
+    when :start_charge
+      log_fuel_charge
+      log_forecast
+      log_prices
+    when :not_empty, :still_charging, :allow_discharge
+      log_fuel_charge
+    when :sunshine_ahead
+      log_forecast
+    when :grid_power_not_cheap
+      log_prices
+    end
+  end
+
+  def log_fuel_charge
+    puts "  Battery charge level: #{senec.bat_fuel_charge} %"
+  end
+
+  def log_forecast
+    puts "  Forecast for the next #{forecast.time_range} hours: #{forecast.total_in_kwh} kWh"
+  end
+
+  def log_prices
+    puts "  Prices in the next #{prices.time_range} hours: #{prices}"
+  end
 
   def battery_action
     @battery_action ||= BatteryAction.new(senec:, prices:, forecast:)

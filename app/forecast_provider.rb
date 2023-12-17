@@ -14,7 +14,11 @@ class ForecastProvider
   def total_in_kwh
     return 0.0 unless raw[0]
 
-    raw[0].records[0].values['_value'].round
+    raw[0].records[0].value.round
+  end
+
+  def time_range
+    24
   end
 
   private
@@ -30,7 +34,7 @@ class ForecastProvider
   def query
     <<~QUERY
       from(bucket: "#{config.influx_bucket}")
-      |> range(start: now(), stop: 24h)
+      |> range(start: now(), stop: #{time_range}h)
       |> filter(fn: (r) => r["_measurement"] == "#{config.influx_measurement_forecast}")
       |> filter(fn: (r) => r["_field"] == "#{field}")
       |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)

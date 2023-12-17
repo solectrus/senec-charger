@@ -14,4 +14,81 @@ class LoopTest < Minitest::Test
     assert_match(/#1/, out)
     assert_empty(err)
   end
+
+  def test_output_start_charge
+    out, err =
+      capture_io do
+        with_mocks(:start_charge) do
+          Loop.start(config: Config.from_env, max_count: 1)
+        end
+      end
+
+    assert_match(/Start charge!/, out)
+    assert_match(/Battery charge level/, out)
+    assert_match(/Forecast for the next 24 hours/, out)
+    assert_match(/Prices in the next 4 hours/, out)
+    assert_empty(err)
+  end
+
+  def test_output_sunshine_ahead
+    out, err =
+      capture_io do
+        with_mocks(:sunshine_ahead) do
+          Loop.start(config: Config.from_env, max_count: 1)
+        end
+      end
+
+    assert_match(/Forecast for the next 24 hours/, out)
+    assert_empty(err)
+  end
+
+  def test_output_allow_discharge
+    out, err =
+      capture_io do
+        with_mocks(:allow_discharge) do
+          Loop.start(config: Config.from_env, max_count: 1)
+        end
+      end
+
+    assert_match(/Battery charge level/, out)
+    assert_empty(err)
+  end
+
+  def test_output_grid_power_not_cheap
+    out, err =
+      capture_io do
+        with_mocks(:grid_power_not_cheap) do
+          Loop.start(config: Config.from_env, max_count: 1)
+        end
+      end
+
+    assert_match(/Prices in the next 4 hours/, out)
+    assert_empty(err)
+  end
+
+  private
+
+  def with_mocks(result, &)
+    battery_action = Minitest::Mock.new
+    battery_action.expect(:perform!, result)
+
+    senec = Minitest::Mock.new
+    senec.expect(:bat_fuel_charge, 50)
+
+    forecast = Minitest::Mock.new
+    forecast.expect(:time_range, 24)
+    forecast.expect(:total_in_kwh, 5)
+
+    prices = Minitest::Mock.new
+    prices.expect(:time_range, 4)
+    prices.expect(:to_s, 'mocked prices')
+
+    BatteryAction.stub(:new, battery_action) do
+      PricesProvider.stub(:new, prices) do
+        ForecastProvider.stub(:new, forecast) do
+          SenecProvider.stub(:new, senec, &)
+        end
+      end
+    end
+  end
 end
