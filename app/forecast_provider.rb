@@ -14,7 +14,7 @@ class ForecastProvider
   def total_in_kwh
     return 0.0 unless raw[0]
 
-    raw[0].records[0].values['_value']
+    raw[0].records[0].values['_value'].round
   end
 
   private

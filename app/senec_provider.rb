@@ -49,7 +49,8 @@ class SenecProvider
 
     remember_request
     request = create_new_data_request
-    @bat_fuel_charge = request.get('ENERGY', 'GUI_BAT_DATA_FUEL_CHARGE')
+    @bat_fuel_charge =
+      request.get('ENERGY', 'GUI_BAT_DATA_FUEL_CHARGE').round(1)
     @safe_charge_running = request.get('ENERGY', 'SAFE_CHARGE_RUNNING') == 1
   end
 
