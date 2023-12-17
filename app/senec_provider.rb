@@ -59,7 +59,8 @@ class SenecProvider
   end
 
   def request_still_valid?
-    @last_request_at && @last_request_at > Time.now - 5
+    # Cache for 1 minute
+    @last_request_at && @last_request_at > Time.now - 60
   end
 
   def remember_request
