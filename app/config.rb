@@ -6,6 +6,7 @@ Config =
     :charger_price_mode,
     :charger_price_time_range,
     :charger_forecast_threshold,
+    :charger_dry_run,
     :influx_schema,
     :influx_host,
     :influx_port,
@@ -80,6 +81,7 @@ Config =
             ENV.fetch('CHARGER_PRICE_TIME_RANGE', '4').to_i,
           charger_forecast_threshold:
             ENV.fetch('CHARGER_FORECAST_THRESHOLD', '20').to_i,
+          charger_dry_run: ENV.fetch('CHARGER_DRY_RUN', 'false') == 'true',
           influx_host: ENV.fetch('INFLUX_HOST'),
           influx_schema: ENV.fetch('INFLUX_SCHEMA', 'http'),
           influx_port: ENV.fetch('INFLUX_PORT', '8086'),

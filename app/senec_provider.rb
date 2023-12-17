@@ -29,6 +29,8 @@ class SenecProvider
   end
 
   def start_charge!
+    return if config.charger_dry_run
+
     Senec::Local::Request.new(
       connection: config.senec_connection,
       body: Senec::Local::SAFETY_CHARGE,
@@ -36,6 +38,8 @@ class SenecProvider
   end
 
   def allow_discharge!
+    return if config.charger_dry_run
+
     Senec::Local::Request.new(
       connection: config.senec_connection,
       body: Senec::Local::ALLOW_DISCHARGE,
