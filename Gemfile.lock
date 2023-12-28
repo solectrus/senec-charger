@@ -5,10 +5,12 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     base64 (0.2.0)
+    bigdecimal (3.1.5)
     climate_control (1.2.0)
     connection_pool (2.4.1)
     crack (0.4.5)
       rexml
+    csv (3.2.8)
     docile (1.4.0)
     dotenv (2.8.1)
     faraday (2.8.1)
@@ -28,6 +30,7 @@ GEM
     minitest (5.20.0)
     minitest-silence (0.2.4)
       minitest (~> 5.12)
+    mutex_m (0.2.0)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
     parallel (1.24.0)
@@ -87,11 +90,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bigdecimal
   climate_control
+  csv
   dotenv
   influxdb-client
   minitest
   minitest-silence
+  mutex_m
   rake
   rubocop
   rubocop-graphql
@@ -105,4 +111,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   2.5.2
+   2.5.3

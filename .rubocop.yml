@@ -6,7 +6,7 @@ require:
   - rubocop-graphql
 
 AllCops:
-  TargetRubyVersion: 3.2
+  TargetRubyVersion: 3.3
   Exclude:
     - Gemfile
     - 'vendor/**/*'
@@ -40,4 +40,7 @@ Layout/FirstArrayElementIndentation:
   Enabled: false
 
 Minitest/MultipleAssertions:
+  Enabled: false
+
+Naming/BlockForwarding:
   Enabled: false
