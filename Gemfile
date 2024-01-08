@@ -9,15 +9,6 @@ gem 'influxdb-client'
 # Unofficial Ruby Client for SENEC Home (https://github.com/solectrus/senec)
 gem 'senec'
 
-# CSV Reading and Writing (https://github.com/ruby/csv)
-gem 'csv'
-
-# Mixin to extend objects to be handled like a Mutex. (https://github.com/ruby/mutex_m)
-gem 'mutex_m'
-
-# Arbitrary-precision decimal floating-point number library. (https://github.com/ruby/bigdecimal)
-gem 'bigdecimal'
-
 group :development, :test do
   # Rake is a Make-like program implemented in Ruby (https://github.com/ruby/rake)
   gem 'rake'
