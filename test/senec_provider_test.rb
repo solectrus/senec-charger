@@ -4,6 +4,7 @@ class SenecProviderTest < Minitest::Test
   def test_success_request
     VCR.use_cassette('senec_success') do
       assert_includes 0..100, senec_provider.bat_fuel_charge
+      assert_includes 0..98, senec_provider.stat_state
       assert_includes [false, true], senec_provider.safe_charge_running?
       assert_predicate senec_provider, :bat_fuel_charge_increased?
     end
@@ -46,6 +47,23 @@ class SenecProviderTest < Minitest::Test
     end
   end
 
+  def test_bat_empty
+    with_stubbed_request(
+      bat_fuel_charge: 13,
+      stat_state: SenecProvider::STAT_STATE_EMPTY,
+    ) do
+      assert_in_delta 13, senec_provider.bat_fuel_charge
+      assert_predicate senec_provider, :bat_empty?
+    end
+  end
+
+  def test_bat_not_empty
+    with_stubbed_request(bat_fuel_charge: 13) do
+      assert_in_delta 13, senec_provider.bat_fuel_charge
+      refute_predicate senec_provider, :bat_empty?
+    end
+  end
+
   private
 
   def senec_provider
@@ -56,7 +74,12 @@ class SenecProviderTest < Minitest::Test
     @config ||= Config.from_env
   end
 
-  def with_stubbed_request(bat_fuel_charge:, safe_charge_running: 0, &)
+  def with_stubbed_request(
+    bat_fuel_charge:,
+    stat_state: 0,
+    safe_charge_running: 0,
+    &
+  )
     VCR.turned_off do
       WebMock.stub_request(
         :post,
@@ -66,6 +89,7 @@ class SenecProviderTest < Minitest::Test
           'ENERGY' => {
             'GUI_BAT_DATA_FUEL_CHARGE' => float_to_string(bat_fuel_charge),
             'SAFE_CHARGE_RUNNING' => int_to_string(safe_charge_running),
+            'STAT_STATE' => int_to_string(stat_state),
           },
         }.to_json,
       )

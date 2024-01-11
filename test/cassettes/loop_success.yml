@@ -5,7 +5,7 @@ http_interactions:
     uri: https://192.168.178.29/lala.cgi
     body:
       encoding: UTF-8
-      string: '{"ENERGY":{"GUI_BAT_DATA_FUEL_CHARGE":"","SAFE_CHARGE_RUNNING":""}}'
+      string: '{"ENERGY":{"GUI_BAT_DATA_FUEL_CHARGE":"","STAT_STATE":"","SAFE_CHARGE_RUNNING":""}}'
     headers:
       Connection:
       - keep-alive
@@ -25,7 +25,7 @@ http_interactions:
       Server:
       - nginx/1.17.7
       Date:
-      - Thu, 11 Jan 2024 05:22:47 GMT
+      - Thu, 11 Jan 2024 05:22:18 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -34,15 +34,15 @@ http_interactions:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"ENERGY":{"GUI_BAT_DATA_FUEL_CHARGE":"fl_00000000","SAFE_CHARGE_RUNNING":"u8_00"}}'
-  recorded_at: Thu, 11 Jan 2024 05:22:47 GMT
+      string: '{"ENERGY":{"GUI_BAT_DATA_FUEL_CHARGE":"fl_00000000","STAT_STATE":"u8_0F","SAFE_CHARGE_RUNNING":"u8_00"}}'
+  recorded_at: Thu, 11 Jan 2024 05:23:19 GMT
 - request:
     method: post
     uri: http://localhost:8086/api/v2/query?org=my-org
     body:
       encoding: UTF-8
-      string: '{"query":"from(bucket: \"my-bucket\")\n|> range(start: 1704950567,
-        stop: 1705036967)\n|> filter(fn: (r) => r[\"_measurement\"] == \"my-forecast\")\n|>
+      string: '{"query":"from(bucket: \"my-bucket\")\n|> range(start: 1704950599,
+        stop: 1705036999)\n|> filter(fn: (r) => r[\"_measurement\"] == \"my-forecast\")\n|>
         filter(fn: (r) => r[\"_field\"] == \"watt\")\n|> aggregateWindow(every: 1h,
         fn: mean, createEmpty: false)\n|> map(fn: (r) => ({ r with _value: r._value
         / 1000.0 }))\n|> sum()\n","dialect":{"header":true,"delimiter":",","annotations":["datatype","group","default"],"commentPrefix":"#","dateTimeFormat":"RFC3339"}}'
@@ -71,13 +71,13 @@ http_interactions:
       X-Influxdb-Version:
       - v2.7.5
       Date:
-      - Thu, 11 Jan 2024 05:22:47 GMT
+      - Thu, 11 Jan 2024 05:22:18 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: "\r\n"
-  recorded_at: Thu, 11 Jan 2024 05:22:47 GMT
+  recorded_at: Thu, 11 Jan 2024 05:23:19 GMT
 - request:
     method: post
     uri: http://localhost:8086/api/v2/query?org=my-org
@@ -112,11 +112,11 @@ http_interactions:
       X-Influxdb-Version:
       - v2.7.5
       Date:
-      - Thu, 11 Jan 2024 05:22:47 GMT
+      - Thu, 11 Jan 2024 05:22:18 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: "\r\n"
-  recorded_at: Thu, 11 Jan 2024 05:22:47 GMT
+  recorded_at: Thu, 11 Jan 2024 05:23:19 GMT
 recorded_with: VCR 6.2.0
