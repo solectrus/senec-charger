@@ -10,7 +10,7 @@ http_interactions:
       Connection:
       - keep-alive
       User-Agent:
-      - Faraday v2.7.12
+      - Faraday v2.9.0
       Content-Type:
       - application/x-www-form-urlencoded; charset=UTF-8
       Accept:
@@ -25,7 +25,7 @@ http_interactions:
       Server:
       - nginx/1.17.7
       Date:
-      - Sun, 17 Dec 2023 12:31:54 GMT
+      - Thu, 11 Jan 2024 05:23:32 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -34,6 +34,6 @@ http_interactions:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"ENERGY":{"GUI_BAT_DATA_FUEL_CHARGE":"fl_42055555","SAFE_CHARGE_RUNNING":"u8_00"}}'
-  recorded_at: Sun, 17 Dec 2023 12:31:54 GMT
+      string: '{"ENERGY":{"GUI_BAT_DATA_FUEL_CHARGE":"fl_00000000","SAFE_CHARGE_RUNNING":"u8_00"}}'
+  recorded_at: Thu, 11 Jan 2024 05:24:33 GMT
 recorded_with: VCR 6.2.0
