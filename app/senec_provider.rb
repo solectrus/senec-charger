@@ -7,13 +7,20 @@ class SenecProvider
 
   attr_reader :config
 
+  STAT_STATE_EMPTY = 15
+
   def bat_fuel_charge
     refresh_request
     @bat_fuel_charge
   end
 
+  def stat_state
+    refresh_request
+    @stat_state
+  end
+
   def bat_empty?
-    bat_fuel_charge.zero?
+    stat_state == STAT_STATE_EMPTY
   end
 
   def safe_charge_running?
@@ -55,6 +62,7 @@ class SenecProvider
     request = create_new_data_request
     @bat_fuel_charge =
       request.get('ENERGY', 'GUI_BAT_DATA_FUEL_CHARGE').round(1)
+    @stat_state = request.get('ENERGY', 'STAT_STATE')
     @safe_charge_running = request.get('ENERGY', 'SAFE_CHARGE_RUNNING') == 1
   end
 
@@ -74,6 +82,7 @@ class SenecProvider
       body: {
         ENERGY: {
           GUI_BAT_DATA_FUEL_CHARGE: '',
+          STAT_STATE: '',
           SAFE_CHARGE_RUNNING: '',
         },
       },

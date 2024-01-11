@@ -29,11 +29,11 @@ http_interactions:
       X-Influxdb-Build:
       - OSS
       X-Influxdb-Version:
-      - v2.7.4
+      - v2.7.5
       Date:
-      - Sun, 17 Dec 2023 12:17:03 GMT
+      - Thu, 11 Jan 2024 05:24:15 GMT
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Sun, 17 Dec 2023 12:17:03 GMT
+  recorded_at: Thu, 11 Jan 2024 05:25:16 GMT
 recorded_with: VCR 6.2.0

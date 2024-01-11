@@ -55,6 +55,15 @@ class BatteryActionTest < Minitest::Test
     assert_equal :grid_power_not_cheap, @battery_action.perform!
   end
 
+  def test_perform_not_empty
+    stub(@senec, :safe_charge_running?, false)
+    stub(@senec, :bat_fuel_charge, 40)
+    stub(@senec, :bat_empty?, false)
+    stub(@senec, :bat_fuel_charge_increased?, false)
+
+    assert_equal :not_empty, @battery_action.perform!
+  end
+
   private
 
   def stub(object, method_name, return_value)

@@ -10,7 +10,7 @@ http_interactions:
       Connection:
       - keep-alive
       User-Agent:
-      - Faraday v2.7.12
+      - Faraday v2.9.0
       Content-Type:
       - application/x-www-form-urlencoded; charset=UTF-8
       Accept:
@@ -25,7 +25,7 @@ http_interactions:
       Server:
       - nginx/1.17.7
       Date:
-      - Wed, 13 Dec 2023 08:25:26 GMT
+      - Thu, 11 Jan 2024 05:27:15 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -34,6 +34,6 @@ http_interactions:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"ENERGY":{"SAFE_CHARGE_FORCE":"u8_00","SAFE_CHARGE_PROHIBIT":"u8_01","SAFE_CHARGE_RUNNING":"u8_00","LI_STORAGE_MODE_START":"u8_00","LI_STORAGE_MODE_STOP":"u8_00","LI_STORAGE_MODE_RUNNING":"u8_00"}}'
-  recorded_at: Wed, 13 Dec 2023 08:25:26 GMT
+      string: '{"ENERGY":{"SAFE_CHARGE_FORCE":"u8_00","SAFE_CHARGE_PROHIBIT":"u8_01","SAFE_CHARGE_RUNNING":"u8_01","LI_STORAGE_MODE_START":"u8_00","LI_STORAGE_MODE_STOP":"u8_00","LI_STORAGE_MODE_RUNNING":"u8_00"}}'
+  recorded_at: Thu, 11 Jan 2024 05:28:16 GMT
 recorded_with: VCR 6.2.0
