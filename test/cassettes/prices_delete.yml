@@ -2,18 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:8086/api/v2/write?bucket=my-bucket&org=my-org&precision=s
+    uri: http://localhost:8086/api/v2/delete?bucket=my-bucket&org=my-org
     body:
       encoding: UTF-8
-      string: |-
-        my-prices amount=0.157,level="CHEAP" 1701421200
-        my-prices amount=0.172,level="CHEAP" 1701424800
-        my-prices amount=0.153,level="VERY_CHEAP" 1701428400
-        my-prices amount=0.176,level="CHEAP" 1701432000
-        my-prices amount=0.15,level="VERY_CHEAP" 1701435600
-        my-prices amount=0.149,level="VERY_CHEAP" 1701439200
-        my-prices amount=0.191,level="EXPENSIVE" 1701442800
-        my-prices amount=0.199,level="VERY_EXPENSIVE" 1701446400
+      string: '{"start":"1970-01-01T01:00:00+01:00","stop":"2038-01-19T04:14:07+01:00"}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -24,7 +16,7 @@ http_interactions:
       Authorization:
       - Token <INFLUX_TOKEN>
       Content-Type:
-      - text/plain
+      - application/json
   response:
     status:
       code: 204

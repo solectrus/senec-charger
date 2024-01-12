@@ -49,7 +49,7 @@ Config =
     end
 
     def validate_price_mode!(price_mode)
-      %i[strict relaxed].include?(price_mode) ||
+      %i[strict moderate relaxed].include?(price_mode) ||
         throw("Price mode is invalid: #{price_mode}")
     end
 
@@ -76,7 +76,8 @@ Config =
           senec_host: ENV.fetch('SENEC_HOST'),
           senec_schema: ENV.fetch('SENEC_SCHEMA', 'https'),
           charger_interval: ENV.fetch('CHARGER_INTERVAL', '3600').to_i,
-          charger_price_mode: ENV.fetch('CHARGER_PRICE_MODE', 'strict').to_sym,
+          charger_price_mode:
+            ENV.fetch('CHARGER_PRICE_MODE', 'moderate').to_sym,
           charger_price_time_range:
             ENV.fetch('CHARGER_PRICE_TIME_RANGE', '4').to_i,
           charger_forecast_threshold:

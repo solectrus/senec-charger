@@ -26,7 +26,7 @@ class LoopTest < Minitest::Test
     assert_match(/Start charge!/, out)
     assert_match(/Battery charge level/, out)
     assert_match(/Forecast for the next 24 hours/, out)
-    assert_match(/Prices in the next 4 hours/, out)
+    assert_match(/Best prices in the next 24 hours/, out)
     assert_empty(err)
   end
 
@@ -54,15 +54,15 @@ class LoopTest < Minitest::Test
     assert_empty(err)
   end
 
-  def test_output_grid_power_not_cheap
+  def test_output_no_cheap_grid_power_ahead
     out, err =
       capture_io do
-        with_mocks(:grid_power_not_cheap) do
+        with_mocks(:no_cheap_grid_power_ahead) do
           Loop.start(config: Config.from_env, max_count: 1)
         end
       end
 
-    assert_match(/Prices in the next 4 hours/, out)
+    assert_match(/Best prices in the next 24 hours/, out)
     assert_empty(err)
   end
 
