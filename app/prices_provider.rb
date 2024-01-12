@@ -7,38 +7,69 @@ class PricesProvider
 
   attr_reader :config
 
-  def cheap_grid_power?
-    levels.count { |level| accepted_levels.include?(level) } >= time_range
+  def cheap_now?
+    best_price_acceptable? && best_prices_now?
   end
 
-  def levels
-    prices.map { |price| price[:level] }
+  def cheap_ahead?
+    best_price_acceptable? && !best_prices_now?
+  end
+
+  def best_price_acceptable?
+    best_prices_weight <= max_acceptable_weight
+  end
+
+  def best_prices_now?
+    best_prices.first&.time&.between?(Time.now - 3600, Time.now)
+  end
+
+  def best_prices_weight
+    weight(best_prices)
   end
 
   def to_s
     if prices.any?
-      prices
-        .map { |price| "#{price[:time]} #{price[:amount]} (#{price[:level]})" }
+      best_prices
+        .map do |price|
+          "#{price.time.strftime('%H:%M')} #{price.amount} (#{price.level})"
+        end
         .join(', ')
     else
       "No prices found between #{range_start} and #{range_stop}"
     end
   end
 
-  def time_range
-    config.charger_price_time_range
-  end
-
   private
 
-  def accepted_levels
-    case config.charger_price_mode
-    when :strict
-      %w[VERY_CHEAP]
-    when :relaxed
-      %w[CHEAP VERY_CHEAP]
+  LEVEL_WEIGHTS = {
+    'VERY_CHEAP' => 1,
+    'CHEAP' => 2,
+    'NORMAL' => 3,
+    'EXPENSIVE' => 4,
+    'VERY_EXPENSIVE' => 5,
+  }.freeze
+
+  def max_acceptable_weight
+    factor =
+      { strict: 1.0, moderate: 1.5, relaxed: 2.0 }[config.charger_price_mode]
+
+    (factor * config.charger_price_time_range).round
+  end
+
+  def weight(cons)
+    cons.sum do |price|
+      LEVEL_WEIGHTS[price.level] || throw("Unknown level: #{price.level}")
     end
   end
+
+  # Find the timeslot with cheapest price level
+  def best_prices
+    prices
+      .each_cons(config.charger_price_time_range)
+      .min_by { |cons| weight(cons) } || []
+  end
+
+  Price = Struct.new(:time, :amount, :level)
 
   # Return prices as an array of hashes (with keys: time, amount, level)
   def prices
@@ -47,12 +78,12 @@ class PricesProvider
     amount_table
       .records
       .zip(level_table.records)
-      .map do |amount, level|
-        {
-          time: Time.parse(amount.time).localtime.strftime('%H:%M'),
-          amount: amount.value,
-          level: level.value,
-        }
+      .map do |amount_record, level_record|
+        Price.new(
+          time: Time.parse(amount_record.time).localtime,
+          amount: amount_record.value,
+          level: level_record.value,
+        )
       end
   end
 
@@ -90,7 +121,8 @@ class PricesProvider
   end
 
   def range_stop
-    range_start + (time_range * 3600)
+    # 24 hours from range_start
+    range_start + (24 * 3_600)
   end
 
   def client

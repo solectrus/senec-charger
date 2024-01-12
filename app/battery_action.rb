@@ -31,7 +31,7 @@ class BatteryAction
                  :bat_fuel_charge,
                  :bat_empty?,
                  :bat_fuel_charge_increased?
-  def_delegators :prices, :cheap_grid_power?
+  def_delegators :prices, :cheap_now?, :cheap_ahead?
   def_delegators :forecast, :sunshine_ahead?
 
   def determine_result
@@ -40,11 +40,17 @@ class BatteryAction
     elsif bat_empty?
       if sunshine_ahead?
         :sunshine_ahead
+      elsif cheap_now?
+        :start_charge
       else
-        cheap_grid_power? ? :start_charge : :grid_power_not_cheap
+        result_when_charging_desirable
       end
     else
       :not_empty
     end
+  end
+
+  def result_when_charging_desirable
+    cheap_ahead? ? :cheap_grid_power_ahead : :no_cheap_grid_power_ahead
   end
 end

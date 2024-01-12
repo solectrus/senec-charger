@@ -39,7 +39,8 @@ class Loop
     allow_discharge: 'Allow discharge!',
     still_charging: 'Still charging, nothing to do',
     sunshine_ahead: 'Sunshine ahead, nothing to do',
-    grid_power_not_cheap: 'Grid power not cheap, nothing to do',
+    cheap_grid_power_ahead: 'Cheap grid power ahead, waiting',
+    no_cheap_grid_power_ahead: 'Grid power not cheap, nothing to do',
     not_empty: 'Battery not empty, nothing to do',
   }.freeze
 
@@ -58,7 +59,7 @@ class Loop
       log_fuel_charge
     when :sunshine_ahead
       log_forecast
-    when :grid_power_not_cheap
+    when :no_cheap_grid_power_ahead, :cheap_grid_power_ahead
       log_prices
     end
   end
@@ -72,7 +73,7 @@ class Loop
   end
 
   def log_prices
-    puts "  Prices in the next #{prices.time_range} hours: #{prices}"
+    puts "  Best prices in the next 24 hours: #{prices}"
   end
 
   def battery_action

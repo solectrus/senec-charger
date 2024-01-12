@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"query":"from(bucket: \"my-bucket\")\n|> range(start: 1683021600,
-        stop: 1683036000)\n|> filter(fn: (r) => r[\"_measurement\"] == \"my-prices\")\n|>
+        stop: 1683108000)\n|> filter(fn: (r) => r[\"_measurement\"] == \"my-prices\")\n|>
         filter(fn: (r) => r[\"_field\"] == \"level\" or r[\"_field\"] == \"amount\")\n|>
         yield()\n","dialect":{"header":true,"delimiter":",","annotations":["datatype","group","default"],"commentPrefix":"#","dateTimeFormat":"RFC3339"}}'
     headers:
@@ -34,7 +34,7 @@ http_interactions:
       X-Influxdb-Version:
       - v2.7.5
       Date:
-      - Thu, 11 Jan 2024 05:24:02 GMT
+      - Fri, 12 Jan 2024 12:21:21 GMT
       Transfer-Encoding:
       - chunked
     body:

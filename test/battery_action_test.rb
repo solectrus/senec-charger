@@ -24,7 +24,7 @@ class BatteryActionTest < Minitest::Test
     stub(@senec, :safe_charge_running?, false)
     stub(@senec, :bat_empty?, true)
     stub(@forecast, :sunshine_ahead?, false)
-    stub(@prices, :cheap_grid_power?, true)
+    stub(@prices, :cheap_now?, true)
     stub(@senec, :start_charge!, nil)
 
     assert_equal :start_charge, @battery_action.perform!
@@ -50,9 +50,20 @@ class BatteryActionTest < Minitest::Test
     stub(@senec, :safe_charge_running?, false)
     stub(@senec, :bat_empty?, true)
     stub(@forecast, :sunshine_ahead?, false)
-    stub(@prices, :cheap_grid_power?, false)
+    stub(@prices, :cheap_now?, false)
+    stub(@prices, :cheap_ahead?, false)
 
-    assert_equal :grid_power_not_cheap, @battery_action.perform!
+    assert_equal :no_cheap_grid_power_ahead, @battery_action.perform!
+  end
+
+  def test_perform_cheap_grid_power_ahead
+    stub(@senec, :safe_charge_running?, false)
+    stub(@senec, :bat_empty?, true)
+    stub(@forecast, :sunshine_ahead?, false)
+    stub(@prices, :cheap_now?, false)
+    stub(@prices, :cheap_ahead?, true)
+
+    assert_equal :cheap_grid_power_ahead, @battery_action.perform!
   end
 
   def test_perform_not_empty
