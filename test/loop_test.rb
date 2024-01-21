@@ -26,7 +26,7 @@ class LoopTest < Minitest::Test
     assert_match(/Start charge!/, out)
     assert_match(/Battery charge level/, out)
     assert_match(/Forecast for the next 24 hours/, out)
-    assert_match(/Best prices in the next 24 hours/, out)
+    assert_match(/mocked prices/, out)
     assert_empty(err)
   end
 
@@ -62,7 +62,7 @@ class LoopTest < Minitest::Test
         end
       end
 
-    assert_match(/Best prices in the next 24 hours/, out)
+    assert_match(/Grid power not cheap/, out)
     assert_empty(err)
   end
 

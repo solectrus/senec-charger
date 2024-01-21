@@ -5,7 +5,7 @@ class ConfigTest < Minitest::Test
     senec_host: '192.168.1.2',
     charger_interval: 1800,
     charger_price_time_range: 3,
-    charger_price_mode: :relaxed,
+    charger_price_max: 70,
     charger_forecast_threshold: 15,
     senec_schema: 'http',
     influx_host: 'influx.example.com',
@@ -44,13 +44,13 @@ class ConfigTest < Minitest::Test
     assert_match(/URL is invalid/, error.message)
   end
 
-  def test_invalid_options_price_mode
+  def test_invalid_options_price_max
     error =
       assert_raises(Exception) do
-        Config.new(VALID_OPTIONS.merge(charger_price_mode: 'foo'))
+        Config.new(VALID_OPTIONS.merge(charger_price_max: 105))
       end
 
-    assert_match(/Price mode is invalid/, error.message)
+    assert_match(/Price max is invalid/, error.message)
   end
 
   def test_invalid_options_price_time_range

@@ -6,14 +6,21 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |-
-        my-prices amount=0.157,level="CHEAP" 1701421200
-        my-prices amount=0.172,level="CHEAP" 1701424800
-        my-prices amount=0.153,level="VERY_CHEAP" 1701428400
-        my-prices amount=0.176,level="CHEAP" 1701432000
-        my-prices amount=0.15,level="VERY_CHEAP" 1701435600
-        my-prices amount=0.149,level="VERY_CHEAP" 1701439200
-        my-prices amount=0.191,level="EXPENSIVE" 1701442800
-        my-prices amount=0.199,level="VERY_EXPENSIVE" 1701446400
+        my-prices amount=0.167 1701421200
+        my-prices amount=0.179 1701424800
+        my-prices amount=0.133 1701428400
+        my-prices amount=0.138 1701432000
+        my-prices amount=0.14 1701435600
+        my-prices amount=0.142 1701439200
+        my-prices amount=0.191 1701442800
+        my-prices amount=0.199 1701446400
+        my-prices amount=0.198 1701450000
+        my-prices amount=0.182 1701453600
+        my-prices amount=0.191 1701457200
+        my-prices amount=0.197 1701460800
+        my-prices amount=0.196 1701464400
+        my-prices amount=0.195 1701468000
+        my-prices amount=0.193 1701471600
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -35,9 +42,9 @@ http_interactions:
       X-Influxdb-Version:
       - v2.7.5
       Date:
-      - Fri, 12 Jan 2024 12:21:21 GMT
+      - Sun, 21 Jan 2024 17:43:09 GMT
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Fri, 12 Jan 2024 12:22:22 GMT
+  recorded_at: Sun, 21 Jan 2024 17:43:09 GMT
 recorded_with: VCR 6.2.0

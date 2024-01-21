@@ -73,7 +73,7 @@ class Loop
   end
 
   def log_prices
-    puts "  Best prices in the next 24 hours: #{prices}"
+    puts prices
   end
 
   def battery_action
