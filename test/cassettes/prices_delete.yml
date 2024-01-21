@@ -27,9 +27,9 @@ http_interactions:
       X-Influxdb-Version:
       - v2.7.5
       Date:
-      - Fri, 12 Jan 2024 12:21:21 GMT
+      - Sun, 21 Jan 2024 17:43:09 GMT
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Fri, 12 Jan 2024 12:22:22 GMT
+  recorded_at: Sun, 21 Jan 2024 17:43:09 GMT
 recorded_with: VCR 6.2.0

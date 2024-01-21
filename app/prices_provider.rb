@@ -16,24 +16,30 @@ class PricesProvider
   end
 
   def best_price_acceptable?
-    best_prices_weight <= max_acceptable_weight
+    return false unless best_prices_average && prices_average
+
+    best_prices_average <= prices_average * config.charger_price_max / 100
   end
 
   def best_prices_now?
     best_prices.first&.time&.between?(Time.now - 3600, Time.now)
   end
 
-  def best_prices_weight
-    weight(best_prices)
+  def best_prices_average
+    average(best_prices)
   end
 
-  def to_s
+  def prices_average
+    average(prices)
+  end
+
+  def to_s # rubocop:disable Metrics/AbcSize
     if prices.any?
-      best_prices
-        .map do |price|
-          "#{price.time.strftime('%H:%M')} #{price.amount} (#{price.level})"
-        end
-        .join(', ')
+      <<~RESULT
+        Checked prices of #{prices.size} hours between #{prices.first.time.strftime('%A, %H:%M')} - #{(prices.last.time + 3600).strftime('%A, %H:%M')}, ⌀ #{prices_average.round(2)}
+        Best #{config.charger_price_time_range}-hour range: #{best_prices.first.time.strftime('%A, %H:%M')} - #{(best_prices.last.time + 3600).strftime('%A, %H:%M')}, ⌀ #{best_prices_average.round(2)}
+        Ratio best/average: #{(best_prices_average * 100 / prices_average).round(1)} %
+      RESULT
     else
       "No prices found between #{range_start} and #{range_stop}"
     end
@@ -41,48 +47,31 @@ class PricesProvider
 
   private
 
-  LEVEL_WEIGHTS = {
-    'VERY_CHEAP' => 1,
-    'CHEAP' => 2,
-    'NORMAL' => 3,
-    'EXPENSIVE' => 4,
-    'VERY_EXPENSIVE' => 5,
-  }.freeze
+  def average(cons)
+    return if cons.empty?
 
-  def max_acceptable_weight
-    factor =
-      { strict: 1.0, moderate: 1.5, relaxed: 2.0 }[config.charger_price_mode]
-
-    (factor * config.charger_price_time_range).round
+    cons.sum(&:amount) / cons.size
   end
 
-  def weight(cons)
-    cons.sum do |price|
-      LEVEL_WEIGHTS[price.level] || throw("Unknown level: #{price.level}")
-    end
-  end
-
-  # Find the timeslot with cheapest price level
+  # Find the timeslot with cheapest price
   def best_prices
     prices
       .each_cons(config.charger_price_time_range)
-      .min_by { |cons| weight(cons) } || []
+      .min_by { |cons| average(cons) } || []
   end
 
-  Price = Struct.new(:time, :amount, :level)
+  Price = Struct.new(:time, :amount)
 
-  # Return prices as an array of hashes (with keys: time, amount, level)
+  # Return prices as an array of hashes (with keys: time, amount)
   def prices
-    return [] unless amount_table && level_table
+    return [] unless amount_table
 
     amount_table
       .records
-      .zip(level_table.records)
-      .map do |amount_record, level_record|
+      .map do |amount_record|
         Price.new(
           time: Time.parse(amount_record.time).localtime,
           amount: amount_record.value,
-          level: level_record.value,
         )
       end
   end
@@ -90,11 +79,6 @@ class PricesProvider
   # Get the table with values for the "amount" field
   def amount_table
     raw.find { |table| table.records.first.field == 'amount' }
-  end
-
-  # Get the table with values for the "level" field
-  def level_table
-    raw.find { |table| table.records.first.field == 'level' }
   end
 
   def raw
@@ -110,7 +94,7 @@ class PricesProvider
       from(bucket: "#{config.influx_bucket}")
       |> range(start: #{range_start.to_i}, stop: #{range_stop.to_i})
       |> filter(fn: (r) => r["_measurement"] == "#{config.influx_measurement_prices}")
-      |> filter(fn: (r) => r["_field"] == "level" or r["_field"] == "amount")
+      |> filter(fn: (r) => r["_field"] == "amount")
       |> yield()
     QUERY
   end

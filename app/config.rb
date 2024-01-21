@@ -3,7 +3,7 @@ Config =
     :senec_host,
     :senec_schema,
     :charger_interval,
-    :charger_price_mode,
+    :charger_price_max,
     :charger_price_time_range,
     :charger_forecast_threshold,
     :charger_dry_run,
@@ -23,7 +23,7 @@ Config =
       validate_url!(senec_url)
       validate_url!(influx_url)
       validate_interval!(charger_interval)
-      validate_price_mode!(charger_price_mode)
+      validate_price_max!(charger_price_max)
       validate_price_time_range!(charger_price_time_range)
       validate_forecast_threshold!(charger_forecast_threshold)
     end
@@ -48,9 +48,9 @@ Config =
         throw("Interval is invalid: #{interval}")
     end
 
-    def validate_price_mode!(price_mode)
-      %i[strict moderate relaxed].include?(price_mode) ||
-        throw("Price mode is invalid: #{price_mode}")
+    def validate_price_max!(price_max)
+      (price_max.positive? && price_max < 100) ||
+        throw("Price max is invalid: #{price_max}")
     end
 
     def validate_price_time_range!(price_time_range)
@@ -76,8 +76,8 @@ Config =
           senec_host: ENV.fetch('SENEC_HOST'),
           senec_schema: ENV.fetch('SENEC_SCHEMA', 'https'),
           charger_interval: ENV.fetch('CHARGER_INTERVAL', '3600').to_i,
-          charger_price_mode:
-            ENV.fetch('CHARGER_PRICE_MODE', 'moderate').to_sym,
+          charger_price_max:
+            ENV.fetch('CHARGER_PRICE_MAX', '70').to_i,
           charger_price_time_range:
             ENV.fetch('CHARGER_PRICE_TIME_RANGE', '4').to_i,
           charger_forecast_threshold:
