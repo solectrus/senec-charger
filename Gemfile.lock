@@ -11,7 +11,7 @@ GEM
       bigdecimal
       rexml
     docile (1.4.0)
-    dotenv (3.0.0)
+    dotenv (3.0.1)
     faraday (2.9.0)
       faraday-net_http (>= 2.0, < 3.2)
     faraday-net_http (3.1.0)
