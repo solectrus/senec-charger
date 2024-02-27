@@ -9,6 +9,12 @@ gem 'influxdb-client'
 # Unofficial Ruby Client for SENEC Home (https://github.com/solectrus/senec)
 gem 'senec'
 
+# CSV Reading and Writing (https://github.com/ruby/csv)
+gem 'csv'
+
+# Support for encoding and decoding binary data using a Base64 representation. (https://github.com/ruby/base64)
+gem 'base64'
+
 group :development, :test do
   # Rake is a Make-like program implemented in Ruby (https://github.com/ruby/rake)
   gem 'rake'

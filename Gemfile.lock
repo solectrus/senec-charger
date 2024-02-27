@@ -4,12 +4,14 @@ GEM
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
+    base64 (0.2.0)
     bigdecimal (3.1.6)
     climate_control (1.2.0)
     connection_pool (2.4.1)
     crack (1.0.0)
       bigdecimal
       rexml
+    csv (3.2.8)
     docile (1.4.0)
     dotenv (3.0.3)
     faraday (2.9.0)
@@ -89,7 +91,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  base64
   climate_control
+  csv
   dotenv
   influxdb-client
   minitest
@@ -107,4 +111,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   2.5.5
+   2.5.6
