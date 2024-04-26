@@ -68,7 +68,7 @@ class LoopTest < Minitest::Test
 
   private
 
-  def with_mocks(result, &)
+  def with_mocks(result, &block)
     battery_action = Minitest::Mock.new
     battery_action.expect(:perform!, result)
 
@@ -86,7 +86,7 @@ class LoopTest < Minitest::Test
     BatteryAction.stub(:new, battery_action) do
       PricesProvider.stub(:new, prices) do
         ForecastProvider.stub(:new, forecast) do
-          SenecProvider.stub(:new, senec, &)
+          SenecProvider.stub(:new, senec, &block)
         end
       end
     end

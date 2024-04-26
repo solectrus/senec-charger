@@ -1,0 +1,17 @@
+.dockerignore
+.env
+.env.*
+.git
+.gitattributes
+.github
+.gitignore
+.rubocop.yml
+.ruby-lsp
+.vscode
+**/.DS_Store
+docker-compose.yml
+coverage
+Dockerfile
+Guardfile
+Rakefile
+test
