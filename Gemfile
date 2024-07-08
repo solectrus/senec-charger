@@ -37,9 +37,6 @@ group :development, :test do
   # Automatic Minitest code style checking tool.
   gem 'rubocop-minitest'
 
-  # Automatic performance checking tool for Ruby code. (https://github.com/DmitryTsepelev/rubocop-graphql)
-  gem 'rubocop-graphql'
-
   # Record your test suite's HTTP interactions and replay them during future test runs for fast, deterministic, accurate tests. (https://benoittgt.github.io/vcr)
   gem 'vcr'
 
