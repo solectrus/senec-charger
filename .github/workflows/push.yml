@@ -36,7 +36,7 @@ jobs:
         run: bundle exec rubocop
 
       - name: Validate compose file
-        run: docker-compose config
+        run: docker compose config
 
       - name: Run tests
         run: bundle exec rake test
