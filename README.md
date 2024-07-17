@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/6280d80e9b7336b614bb/maintainability)](https://codeclimate.com/repos/65775403feb13f15432f92cd/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6280d80e9b7336b614bb/test_coverage)](https://codeclimate.com/repos/65775403feb13f15432f92cd/test_coverage)
 
-# SENEC-Charger
+# SENEC Charger
 
 Automated low-cost grid charging for SENEC Home V3 / V2.1 and Tibber dynamic electricity tariff
 
