@@ -82,7 +82,7 @@ GEM
     strscan (3.1.0)
     timecop (0.9.10)
     unicode-display_width (2.5.0)
-    uri (0.13.0)
+    uri (0.13.1)
     vcr (6.3.1)
       base64
     webmock (3.23.1)
