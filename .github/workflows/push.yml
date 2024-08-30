@@ -36,13 +36,13 @@ jobs:
         run: bundle exec rubocop
 
       - name: Validate compose file
-        run: docker-compose config
+        run: docker compose config
 
       - name: Run tests
         run: bundle exec rake test
 
       - name: Send test coverage to CodeClimate
-        uses: paambaati/codeclimate-action@v8.0.0
+        uses: paambaati/codeclimate-action@v9.0.0
         if: ${{ env.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: true

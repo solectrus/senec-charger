@@ -9,7 +9,7 @@
 .ruby-lsp
 .vscode
 **/.DS_Store
-docker-compose.yml
+compose.yml
 coverage
 Dockerfile
 Guardfile

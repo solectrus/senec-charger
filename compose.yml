@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   senec-charger:
     image: ghcr.io/solectrus/senec-charger:latest
@@ -23,7 +21,7 @@ services:
       - INFLUX_BUCKET
       - INFLUX_MEASUREMENT_PRICES=${INFLUX_MEASUREMENT_PRICES}
       - INFLUX_MEASUREMENT_FORECAST=${INFLUX_MEASUREMENT_FORECAST}
-    restart: always
+    restart: unless-stopped
 
   forecast-collector:
     image: ghcr.io/solectrus/forecast-collector:latest
@@ -74,7 +72,7 @@ services:
       - FORECAST_3_DAMPING_EVENING
       - FORECAST_INTERVAL
       - FORECAST_SOLAR_APIKEY
-    restart: always
+    restart: unless-stopped
 
   tibber-collector:
     image: ghcr.io/solectrus/tibber-collector:latest
@@ -92,7 +90,7 @@ services:
       - INFLUX_MEASUREMENT=${INFLUX_MEASUREMENT_PRICES}
       - TIBBER_TOKEN
       - TIBBER_INTERVAL
-    restart: always
+    restart: unless-stopped
 
   influxdb:
     image: influxdb:2.7-alpine
@@ -104,7 +102,7 @@ services:
       - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUX_BUCKET}
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUX_ADMIN_TOKEN}
     command: influxd run --bolt-path /var/lib/influxdb2/influxd.bolt --engine-path /var/lib/influxdb2/engine --store disk
-    restart: always
+    restart: unless-stopped
     healthcheck:
       test: ['CMD', 'influx', 'ping']
       interval: 10s
