@@ -19,9 +19,9 @@ GEM
       logger
     faraday-net_http (3.3.0)
       net-http
-    faraday-net_http_persistent (2.1.0)
+    faraday-net_http_persistent (2.2.0)
       faraday (~> 2.5)
-      net-http-persistent (~> 4.0)
+      net-http-persistent (>= 4.0.4, < 5)
     faraday-request-timer (0.2.0)
       faraday (>= 0.9.0)
     hashdiff (1.1.1)
