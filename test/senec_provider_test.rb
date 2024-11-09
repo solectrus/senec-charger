@@ -48,12 +48,14 @@ class SenecProviderTest < Minitest::Test
   end
 
   def test_bat_empty
-    with_stubbed_request(
-      bat_fuel_charge: 13,
-      stat_state: SenecProvider::STAT_STATE_EMPTY,
-    ) do
-      assert_in_delta 13, senec_provider.bat_fuel_charge
-      assert_predicate senec_provider, :bat_empty?
+    SenecProvider::STAT_STATE_EMPTY.each do |stat_state|
+      with_stubbed_request(
+        bat_fuel_charge: 13,
+        stat_state:,
+      ) do
+        assert_in_delta 13, senec_provider.bat_fuel_charge
+        assert_predicate senec_provider, :bat_empty?
+      end
     end
   end
 

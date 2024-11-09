@@ -7,7 +7,10 @@ class SenecProvider
 
   attr_reader :config
 
-  STAT_STATE_EMPTY = 15
+  STAT_STATE_EMPTY = [
+    15, # BATTERY EMPTY
+    89, # SPARE CAPACITY
+  ].freeze
 
   def bat_fuel_charge
     refresh_request
@@ -20,7 +23,7 @@ class SenecProvider
   end
 
   def bat_empty?
-    stat_state == STAT_STATE_EMPTY
+    STAT_STATE_EMPTY.include?(stat_state)
   end
 
   def safe_charge_running?
