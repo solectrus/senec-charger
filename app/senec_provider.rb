@@ -9,6 +9,7 @@ class SenecProvider
 
   STAT_STATE_EMPTY = [
     15, # BATTERY EMPTY
+    88, # DISCHARGE PROHIBITED
     89, # SPARE CAPACITY
   ].freeze
 
