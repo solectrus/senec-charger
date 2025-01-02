@@ -11,7 +11,7 @@ puts 'SENEC charger for SOLECTRUS, ' \
        "Version #{ENV.fetch('VERSION', '<unknown>')}, " \
        "built at #{ENV.fetch('BUILDTIME', '<unknown>')}"
 puts 'https://github.com/solectrus/senec-charger'
-puts 'Copyright (c) 2023-2024 Georg Ledermann, released under the MIT License'
+puts 'Copyright (c) 2023-2025 Georg Ledermann, released under the MIT License'
 puts "\n"
 
 config = Config.from_env
