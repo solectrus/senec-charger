@@ -47,6 +47,6 @@ This setup uses the following other Docker services:
 
 ## License
 
-Copyright (c) 2023-2024 Georg Ledermann, released under the MIT License
+Copyright (c) 2023-2025 Georg Ledermann, released under the MIT License
 
 Sponsored by [EP: Bölsche Frikom GmbH](https://www.ep.de/boelsche)
