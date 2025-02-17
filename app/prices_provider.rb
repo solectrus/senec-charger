@@ -45,6 +45,8 @@ class PricesProvider
     end
   end
 
+  Price = Struct.new(:time, :amount)
+
   private
 
   def average(cons)
@@ -53,14 +55,12 @@ class PricesProvider
     cons.sum(&:amount) / cons.size
   end
 
-  # Find the timeslot with cheapest price
+  # Find the time slot with cheapest price
   def best_prices
     prices
       .each_cons(config.charger_price_time_range)
       .min_by { |cons| average(cons) } || []
   end
-
-  Price = Struct.new(:time, :amount)
 
   # Return prices as an array of hashes (with keys: time, amount)
   def prices
