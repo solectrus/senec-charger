@@ -40,7 +40,7 @@ GEM
     net-http-persistent (4.0.6)
       connection_pool (~> 2.2, >= 2.2.4)
     parallel (1.27.0)
-    parser (3.3.8.0)
+    parser (3.3.9.0)
       ast (~> 2.4.1)
       racc
     prism (1.4.0)
