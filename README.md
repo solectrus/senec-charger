@@ -1,7 +1,7 @@
 [![Continuous integration](https://github.com/solectrus/senec-charger/actions/workflows/push.yml/badge.svg)](https://github.com/solectrus/senec-charger/actions/workflows/push.yml)
 [![wakatime](https://wakatime.com/badge/user/697af4f5-617a-446d-ba58-407e7f3e0243/project/018c5239-d626-4755-b81b-a7c7006ebabb.svg)](https://wakatime.com/badge/user/697af4f5-617a-446d-ba58-407e7f3e0243/project/018c5239-d626-4755-b81b-a7c7006ebabb)
-[![Maintainability](https://api.codeclimate.com/v1/badges/6280d80e9b7336b614bb/maintainability)](https://codeclimate.com/repos/65775403feb13f15432f92cd/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/6280d80e9b7336b614bb/test_coverage)](https://codeclimate.com/repos/65775403feb13f15432f92cd/test_coverage)
+[![Maintainability](https://qlty.sh/badges/e025af69-1920-48b8-942e-18436af375f9/maintainability.svg)](https://qlty.sh/gh/solectrus/projects/senec-charger)
+[![Code Coverage](https://qlty.sh/badges/e025af69-1920-48b8-942e-18436af375f9/coverage.svg)](https://qlty.sh/gh/solectrus/projects/senec-charger)
 
 # SENEC Charger
 
