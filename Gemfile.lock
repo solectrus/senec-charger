@@ -62,7 +62,7 @@ GEM
     rack (3.2.0)
     rainbow (3.1.1)
     rake (13.3.0)
-    regexp_parser (2.10.0)
+    regexp_parser (2.11.0)
     rexml (3.4.1)
     rubocop (1.79.1)
       json (~> 2.3)
