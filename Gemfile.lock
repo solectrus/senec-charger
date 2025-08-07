@@ -64,6 +64,7 @@ GEM
     rake (13.3.0)
     regexp_parser (2.11.0)
     rexml (3.4.1)
+    rotp (6.3.0)
     rubocop (1.79.2)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -90,11 +91,12 @@ GEM
       lint_roller (~> 1.1)
       rubocop (>= 1.72.1)
     ruby-progressbar (1.13.0)
-    senec (0.21.0)
+    senec (0.22.0)
       faraday
       faraday-net_http_persistent
       faraday-request-timer
       oauth2
+      rotp
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
