@@ -22,7 +22,7 @@ class PricesProvider
   end
 
   def best_prices_now?
-    best_prices.first&.time&.between?(Time.now - 3600, Time.now)
+    best_prices.first&.time&.between?(Time.now - 900, Time.now)
   end
 
   def best_prices_average
@@ -36,7 +36,7 @@ class PricesProvider
   def to_s # rubocop:disable Metrics/AbcSize
     if prices.any?
       <<~RESULT
-        Checked prices of #{prices.size} hours between #{prices.first.time.strftime('%A, %H:%M')} - #{(prices.last.time + 3600).strftime('%A, %H:%M')}, ⌀ #{prices_average.round(2)}
+        Checked prices between #{prices.first.time.strftime('%A, %H:%M')} - #{(prices.last.time + 3600).strftime('%A, %H:%M')}, ⌀ #{prices_average.round(2)}
         Best #{config.charger_price_time_range}-hour range: #{best_prices.first.time.strftime('%A, %H:%M')} - #{(best_prices.last.time + 3600).strftime('%A, %H:%M')}, ⌀ #{best_prices_average.round(2)}
         Ratio best/average: #{(best_prices_average * 100 / prices_average).round(1)} %
       RESULT
@@ -101,7 +101,9 @@ class PricesProvider
 
   def range_start
     now = Time.now
-    Time.new(now.year, now.month, now.day, now.hour)
+    # Round down to the nearest 15-minute interval
+    minutes = (now.min / 15) * 15
+    Time.new(now.year, now.month, now.day, now.hour, minutes)
   end
 
   def range_stop
