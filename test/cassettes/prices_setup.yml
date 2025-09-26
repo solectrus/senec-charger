@@ -27,7 +27,7 @@ http_interactions:
       Accept:
       - "*/*"
       User-Agent:
-      - influxdb-client-ruby/3.1.0
+      - influxdb-client-ruby/3.2.0
       Authorization:
       - Token <INFLUX_TOKEN>
       Content-Type:
@@ -40,11 +40,11 @@ http_interactions:
       X-Influxdb-Build:
       - OSS
       X-Influxdb-Version:
-      - v2.7.10
+      - v2.7.12
       Date:
-      - Sat, 09 Nov 2024 05:25:38 GMT
+      - Fri, 26 Sep 2025 13:35:03 GMT
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Sat, 09 Nov 2024 05:25:38 GMT
+  recorded_at: Fri, 26 Sep 2025 13:36:04 GMT
 recorded_with: VCR 6.3.1
