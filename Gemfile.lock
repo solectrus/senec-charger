@@ -40,7 +40,7 @@ GEM
       minitest (~> 5.12)
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
-    net-http (0.6.0)
+    net-http (0.7.0)
       uri
     net-http-persistent (4.0.6)
       connection_pool (~> 2.2, >= 2.2.4)
@@ -110,7 +110,7 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
-    uri (1.0.4)
+    uri (1.1.0)
     vcr (6.3.1)
       base64
     version_gem (1.1.9)
