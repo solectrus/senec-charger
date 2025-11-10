@@ -35,7 +35,7 @@ GEM
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     logger (1.7.0)
-    minitest (5.26.0)
+    minitest (5.26.1)
     minitest-silence (0.2.4)
       minitest (~> 5.12)
     multi_xml (0.7.2)
