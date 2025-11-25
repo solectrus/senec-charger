@@ -36,13 +36,19 @@ class PricesProvider
   def to_s # rubocop:disable Metrics/AbcSize
     if prices.any?
       <<~RESULT
-        Checked prices between #{prices.first.time.strftime('%A, %H:%M')} - #{(prices.last.time + 3600).strftime('%A, %H:%M')}, ⌀ #{prices_average.round(2)}
-        Best #{config.charger_price_time_range}-hour range: #{best_prices.first.time.strftime('%A, %H:%M')} - #{(best_prices.last.time + 3600).strftime('%A, %H:%M')}, ⌀ #{best_prices_average.round(2)}
+        Checked prices between #{prices.first.time.strftime('%A, %H:%M')} - #{end_time(prices).strftime('%A, %H:%M')}, ⌀ #{prices_average.round(2)}
+        Best #{config.charger_price_time_range}-hour range: #{best_prices.first.time.strftime('%A, %H:%M')} - #{end_time(best_prices).strftime('%A, %H:%M')}, ⌀ #{best_prices_average.round(2)}
         Ratio best/average: #{(best_prices_average * 100 / prices_average).round(1)} %
       RESULT
     else
       "No prices found between #{range_start} and #{range_stop}"
     end
+  end
+
+  def end_time(price_list)
+    return Time.now if price_list.empty?
+
+    price_list.last.time + detect_interval_size(price_list)
   end
 
   Price = Struct.new(:time, :amount)
@@ -55,11 +61,40 @@ class PricesProvider
     cons.sum(&:amount) / cons.size
   end
 
+  # Detect interval size from price data (returns seconds)
+  # Defaults to 900 seconds (15 minutes) if not enough data
+  def detect_interval_size(price_list)
+    price_list.size >= 2 ? (price_list[1].time - price_list[0].time) : 900
+  end
+
   # Find the time slot with cheapest price
   def best_prices
-    prices
-      .each_cons(config.charger_price_time_range)
-      .min_by { |cons| average(cons) } || []
+    return [] if prices.empty?
+
+    time_range_seconds = config.charger_price_time_range * 3600
+
+    # Build sliding windows: for each price point, collect all prices
+    # within the configured time range starting from that point
+    windows = prices.map { |start_price| build_window(start_price, time_range_seconds) }
+
+    # Only consider complete windows that span the full configured time range
+    complete_windows = windows.select { |window| complete_window?(window, time_range_seconds) }
+
+    # Return the window with the lowest average price
+    complete_windows.min_by { |window| average(window) } || []
+  end
+
+  def build_window(start_price, time_range_seconds)
+    end_time = start_price.time + time_range_seconds
+    prices.select { |p| p.time >= start_price.time && p.time < end_time }
+  end
+
+  def complete_window?(window, time_range_seconds)
+    return false if window.empty?
+
+    actual_duration = window.last.time - window.first.time
+    # Allow tolerance of one interval
+    actual_duration >= time_range_seconds - detect_interval_size(window)
   end
 
   # Return prices as an array of hashes (with keys: time, amount)

@@ -119,32 +119,63 @@ class PricesProviderTest < Minitest::Test
 
   ### Write fake prices to InfluxDB
 
-  def fake_prices
-    # Prices from some hours after TIME
+  def fake_prices # rubocop:disable Metrics/AbcSize
+    # Prices with 15-minute intervals after TIME
     # Average price is 0.176
     # Best 4-hour range is 12:00 - 16:00 (average is 0.138)
     #
     # Ratio is 0.138 / 0.176 = 0.78
     # (acceptable for RELAXED, but not for MODERATE or STRICT)
-    [
-      { time: '2023-12-01 10:00 +01', amount: 0.167 },
-      { time: '2023-12-01 11:00 +01', amount: 0.179 },
-      #### Best 4-hour range starts here
-      { time: '2023-12-01 12:00 +01', amount: 0.133 },
-      { time: '2023-12-01 13:00 +01', amount: 0.138 },
-      { time: '2023-12-01 14:00 +01', amount: 0.140 },
-      { time: '2023-12-01 15:00 +01', amount: 0.142 },
-      #### Best 4-hour range ends here
-      { time: '2023-12-01 16:00 +01', amount: 0.191 },
-      { time: '2023-12-01 17:00 +01', amount: 0.199 },
-      { time: '2023-12-01 18:00 +01', amount: 0.198 },
-      { time: '2023-12-01 19:00 +01', amount: 0.182 },
-      { time: '2023-12-01 20:00 +01', amount: 0.191 },
-      { time: '2023-12-01 21:00 +01', amount: 0.197 },
-      { time: '2023-12-01 22:00 +01', amount: 0.196 },
-      { time: '2023-12-01 23:00 +01', amount: 0.195 },
-      { time: '2023-12-02 00:00 +01', amount: 0.193 },
-    ]
+    prices = []
+
+    # 10:00 - 11:00 (average: 0.167)
+    4.times { |i| prices << { time: "2023-12-01 10:#{i * 15}:00 +01", amount: 0.167 } }
+
+    # 11:00 - 12:00 (average: 0.179)
+    4.times { |i| prices << { time: "2023-12-01 11:#{i * 15}:00 +01", amount: 0.179 } }
+
+    #### Best 4-hour range starts here
+    # 12:00 - 13:00 (average: 0.133)
+    4.times { |i| prices << { time: "2023-12-01 12:#{i * 15}:00 +01", amount: 0.133 } }
+
+    # 13:00 - 14:00 (average: 0.138)
+    4.times { |i| prices << { time: "2023-12-01 13:#{i * 15}:00 +01", amount: 0.138 } }
+
+    # 14:00 - 15:00 (average: 0.140)
+    4.times { |i| prices << { time: "2023-12-01 14:#{i * 15}:00 +01", amount: 0.140 } }
+
+    # 15:00 - 16:00 (average: 0.142)
+    4.times { |i| prices << { time: "2023-12-01 15:#{i * 15}:00 +01", amount: 0.142 } }
+    #### Best 4-hour range ends here
+
+    # 16:00 - 17:00 (average: 0.191)
+    4.times { |i| prices << { time: "2023-12-01 16:#{i * 15}:00 +01", amount: 0.191 } }
+
+    # 17:00 - 18:00 (average: 0.199)
+    4.times { |i| prices << { time: "2023-12-01 17:#{i * 15}:00 +01", amount: 0.199 } }
+
+    # 18:00 - 19:00 (average: 0.198)
+    4.times { |i| prices << { time: "2023-12-01 18:#{i * 15}:00 +01", amount: 0.198 } }
+
+    # 19:00 - 20:00 (average: 0.182)
+    4.times { |i| prices << { time: "2023-12-01 19:#{i * 15}:00 +01", amount: 0.182 } }
+
+    # 20:00 - 21:00 (average: 0.191)
+    4.times { |i| prices << { time: "2023-12-01 20:#{i * 15}:00 +01", amount: 0.191 } }
+
+    # 21:00 - 22:00 (average: 0.197)
+    4.times { |i| prices << { time: "2023-12-01 21:#{i * 15}:00 +01", amount: 0.197 } }
+
+    # 22:00 - 23:00 (average: 0.196)
+    4.times { |i| prices << { time: "2023-12-01 22:#{i * 15}:00 +01", amount: 0.196 } }
+
+    # 23:00 - 00:00 (average: 0.195)
+    4.times { |i| prices << { time: "2023-12-01 23:#{i * 15}:00 +01", amount: 0.195 } }
+
+    # 00:00 - 01:00 (average: 0.193)
+    4.times { |i| prices << { time: "2023-12-02 00:#{i * 15}:00 +01", amount: 0.193 } }
+
+    prices
   end
 
   def price_points

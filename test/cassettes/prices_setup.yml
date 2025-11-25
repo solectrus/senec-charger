@@ -7,20 +7,65 @@ http_interactions:
       encoding: UTF-8
       string: |-
         my-prices amount=0.167 1701421200
+        my-prices amount=0.167 1701422100
+        my-prices amount=0.167 1701423000
+        my-prices amount=0.167 1701423900
         my-prices amount=0.179 1701424800
+        my-prices amount=0.179 1701425700
+        my-prices amount=0.179 1701426600
+        my-prices amount=0.179 1701427500
         my-prices amount=0.133 1701428400
+        my-prices amount=0.133 1701429300
+        my-prices amount=0.133 1701430200
+        my-prices amount=0.133 1701431100
         my-prices amount=0.138 1701432000
+        my-prices amount=0.138 1701432900
+        my-prices amount=0.138 1701433800
+        my-prices amount=0.138 1701434700
         my-prices amount=0.14 1701435600
+        my-prices amount=0.14 1701436500
+        my-prices amount=0.14 1701437400
+        my-prices amount=0.14 1701438300
         my-prices amount=0.142 1701439200
+        my-prices amount=0.142 1701440100
+        my-prices amount=0.142 1701441000
+        my-prices amount=0.142 1701441900
         my-prices amount=0.191 1701442800
+        my-prices amount=0.191 1701443700
+        my-prices amount=0.191 1701444600
+        my-prices amount=0.191 1701445500
         my-prices amount=0.199 1701446400
+        my-prices amount=0.199 1701447300
+        my-prices amount=0.199 1701448200
+        my-prices amount=0.199 1701449100
         my-prices amount=0.198 1701450000
+        my-prices amount=0.198 1701450900
+        my-prices amount=0.198 1701451800
+        my-prices amount=0.198 1701452700
         my-prices amount=0.182 1701453600
+        my-prices amount=0.182 1701454500
+        my-prices amount=0.182 1701455400
+        my-prices amount=0.182 1701456300
         my-prices amount=0.191 1701457200
+        my-prices amount=0.191 1701458100
+        my-prices amount=0.191 1701459000
+        my-prices amount=0.191 1701459900
         my-prices amount=0.197 1701460800
+        my-prices amount=0.197 1701461700
+        my-prices amount=0.197 1701462600
+        my-prices amount=0.197 1701463500
         my-prices amount=0.196 1701464400
+        my-prices amount=0.196 1701465300
+        my-prices amount=0.196 1701466200
+        my-prices amount=0.196 1701467100
         my-prices amount=0.195 1701468000
+        my-prices amount=0.195 1701468900
+        my-prices amount=0.195 1701469800
+        my-prices amount=0.195 1701470700
         my-prices amount=0.193 1701471600
+        my-prices amount=0.193 1701472500
+        my-prices amount=0.193 1701473400
+        my-prices amount=0.193 1701474300
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -42,9 +87,9 @@ http_interactions:
       X-Influxdb-Version:
       - v2.7.12
       Date:
-      - Fri, 26 Sep 2025 13:35:03 GMT
+      - Tue, 04 Nov 2025 16:14:32 GMT
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Fri, 26 Sep 2025 13:36:04 GMT
+  recorded_at: Tue, 04 Nov 2025 16:15:33 GMT
 recorded_with: VCR 6.3.1
