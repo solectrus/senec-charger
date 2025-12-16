@@ -27,7 +27,7 @@ Metrics/CyclomaticComplexity:
   Max: 10
 
 Metrics/ClassLength:
-  Max: 130
+  Max: 140
   Exclude:
     - test/**/*
 

@@ -60,7 +60,8 @@ class PricesProvider
     msg = "Checked prices #{start_time}-#{end_time}"
 
     if config.charger_price_comparison_hour_start
-      msg += " (filtered #{config.charger_price_comparison_hour_start}:00-#{config.charger_price_comparison_hour_end}:00)"
+      msg += " (filtered #{config.charger_price_comparison_hour_start}" \
+             ":00-#{config.charger_price_comparison_hour_end}:00)"
     end
 
     msg + ", Ref Ø #{ref_price}"
@@ -79,7 +80,8 @@ class PricesProvider
     is_cheap = best_avg <= target_price
 
     "\n    Best slot: #{slot_start} - #{slot_end} @ #{best_avg}" \
-      "\n    Decision:  #{ratio}% of Ref (Limit #{config.charger_price_max}% / < #{target_price}) -> #{is_cheap ? 'CHEAP' : 'EXPENSIVE'}"
+      "\n    Decision:  #{ratio}% of Ref (Limit #{config.charger_price_max}% " \
+      "/ < #{target_price}) -> #{is_cheap ? 'CHEAP' : 'EXPENSIVE'}"
   end
 
   def end_time(price_list)

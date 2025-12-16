@@ -65,6 +65,7 @@ class PricesProviderTest < Minitest::Test
       config.stub :charger_price_comparison_hour_end, 20 do
         VCR.use_cassette('prices_success') do
           output = prices_provider.to_s
+
           assert_match(/\(filtered 6:00-20:00\)/, output)
         end
       end
