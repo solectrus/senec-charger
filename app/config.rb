@@ -6,6 +6,8 @@ Config =
     :charger_price_max,
     :charger_price_time_range,
     :charger_forecast_threshold,
+    :charger_price_comparison_hour_start,
+    :charger_price_comparison_hour_end,
     :charger_dry_run,
     :influx_schema,
     :influx_host,
@@ -26,6 +28,7 @@ Config =
       validate_price_max!(charger_price_max)
       validate_price_time_range!(charger_price_time_range)
       validate_forecast_threshold!(charger_forecast_threshold)
+      validate_price_comparison_hours!(charger_price_comparison_hour_start, charger_price_comparison_hour_end)
     end
 
     def influx_url
@@ -70,6 +73,26 @@ Config =
         throw("URL is invalid: #{url}")
     end
 
+    def validate_price_comparison_hours!(start_hour, end_hour)
+      # Valid if both are nil (feature disabled)
+      return if start_hour.nil? && end_hour.nil?
+
+      # Invalid if only one is set
+      if start_hour.nil? || end_hour.nil?
+        raise ArgumentError, 'Both start and end hour must be set for price comparison'
+      end
+
+      # Invalid if out of bounds (0-23)
+      unless (0..23).cover?(start_hour) && (0..23).cover?(end_hour)
+        raise ArgumentError, 'Price comparison hours must be between 0 and 23'
+      end
+
+      # Invalid if start is not before end
+      return if start_hour < end_hour
+
+      raise ArgumentError, 'Price comparison start hour must be before end hour'
+    end
+
     def self.from_env(options = {})
       new(
         {
@@ -93,6 +116,8 @@ Config =
             ENV.fetch('INFLUX_MEASUREMENT_PRICES', 'Prices'),
           influx_measurement_forecast:
             ENV.fetch('INFLUX_MEASUREMENT_FORECAST', 'Forecast'),
+          charger_price_comparison_hour_start: ENV['CHARGER_PRICE_COMPARISON_HOUR_START']&.to_i,
+          charger_price_comparison_hour_end: ENV['CHARGER_PRICE_COMPARISON_HOUR_END']&.to_i,
         }.merge(options),
       )
     end

@@ -102,4 +102,62 @@ class ConfigTest < Minitest::Test
     assert_equal 'my-prices', config.influx_measurement_prices
     assert_equal 'my-forecast', config.influx_measurement_forecast
   end
+
+  def test_price_comparison_config_valid
+    config = Config.new(VALID_OPTIONS.merge(
+                          charger_price_comparison_hour_start: 6,
+                          charger_price_comparison_hour_end: 18,
+    ))
+
+    assert_equal 6, config.charger_price_comparison_hour_start
+    assert_equal 18, config.charger_price_comparison_hour_end
+  end
+
+  def test_price_comparison_config_missing_one
+    # Should fail if only start is provided
+    assert_raises(ArgumentError) do
+      Config.new(VALID_OPTIONS.merge(charger_price_comparison_hour_start: 6))
+    end
+
+    # Should fail if only end is provided
+    assert_raises(ArgumentError) do
+      Config.new(VALID_OPTIONS.merge(charger_price_comparison_hour_end: 18))
+    end
+  end
+
+  def test_price_comparison_config_out_of_bounds
+    # Start hour too low
+    assert_raises(ArgumentError) do
+      Config.new(VALID_OPTIONS.merge(
+                   charger_price_comparison_hour_start: -1,
+                   charger_price_comparison_hour_end: 10,
+      ))
+    end
+
+    # End hour too high
+    assert_raises(ArgumentError) do
+      Config.new(VALID_OPTIONS.merge(
+                   charger_price_comparison_hour_start: 10,
+                   charger_price_comparison_hour_end: 24,
+      ))
+    end
+  end
+
+  def test_price_comparison_config_invalid_order
+    # Start hour same as end hour
+    assert_raises(ArgumentError) do
+      Config.new(VALID_OPTIONS.merge(
+                   charger_price_comparison_hour_start: 10,
+                   charger_price_comparison_hour_end: 10,
+      ))
+    end
+
+    # Start hour after end hour
+    assert_raises(ArgumentError) do
+      Config.new(VALID_OPTIONS.merge(
+                   charger_price_comparison_hour_start: 12,
+                   charger_price_comparison_hour_end: 10,
+      ))
+    end
+  end
 end

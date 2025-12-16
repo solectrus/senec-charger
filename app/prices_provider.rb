@@ -16,9 +16,19 @@ class PricesProvider
   end
 
   def best_price_acceptable?
-    return false unless best_prices_average && prices_average
+    # We need a valid best price average
+    return false unless best_prices_average
 
-    best_prices_average <= prices_average * config.charger_price_max / 100
+    # Determine the reference price to compare against.
+    # Use the comparison average (filtered) if available, otherwise the full average.
+    # If a range is configured but no prices exist for it (ref_price is nil),
+    # we return false to be safe.
+    # 1. Try to get the average of the configured time window (comparison_average).
+    # 2. If not configured (or empty), fall back to the full 24h average (prices_average).
+    ref_price = comparison_average || prices_average
+    return false unless ref_price
+
+    best_prices_average <= ref_price * config.charger_price_max / 100
   end
 
   def best_prices_now?
@@ -54,6 +64,23 @@ class PricesProvider
   Price = Struct.new(:time, :amount)
 
   private
+
+  # Returns the average of the specific time window (if configured)
+  # Returns nil if the filtered list is empty
+  def comparison_average
+    average(comparison_prices)
+  end
+
+  def comparison_prices
+    # Because of Config validation, we know if one is set, both are set and valid.
+    return prices unless config.charger_price_comparison_hour_start && config.charger_price_comparison_hour_end
+
+    # Filter prices to only include those within the configured hour range
+    prices.select do |price|
+      hour = price.time.hour
+      hour.between?(config.charger_price_comparison_hour_start, config.charger_price_comparison_hour_end)
+    end
+  end
 
   def average(cons)
     return if cons.empty?

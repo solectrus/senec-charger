@@ -107,6 +107,30 @@ class PricesProviderTest < Minitest::Test
     end
   end
 
+  def test_best_price_acceptable_moderate_with_comparison_range
+    # In the fake_prices data:
+    # - Best 4h average: 0.138
+    # - Global 24h average: 0.176
+    # - MODERATE threshold (70%): 0.176 * 0.7 = 0.123
+    # 0.138 is NOT <= 0.123, so this normally fails (refute_predicate).
+
+    # We configure the comparison range to 17:00 - 18:00.
+    # - Price at 17:00-18:00: 0.199
+    # - New Reference Average: 0.199
+    # - New Threshold (70%): 0.199 * 0.7 = 0.1393
+    # 0.138 IS <= 0.1393, so this should now PASS.
+
+    config.stub :charger_price_max, MODERATE do
+      config.stub :charger_price_comparison_hour_start, 17 do
+        config.stub :charger_price_comparison_hour_end, 18 do
+          VCR.use_cassette('prices_success') do
+            assert_predicate prices_provider, :best_price_acceptable?
+          end
+        end
+      end
+    end
+  end
+
   private
 
   def prices_provider
