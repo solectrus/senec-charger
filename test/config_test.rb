@@ -107,7 +107,7 @@ class ConfigTest < Minitest::Test
     config = Config.new(VALID_OPTIONS.merge(
                           charger_price_comparison_hour_start: 6,
                           charger_price_comparison_hour_end: 18,
-    ))
+                        ))
 
     assert_equal 6, config.charger_price_comparison_hour_start
     assert_equal 18, config.charger_price_comparison_hour_end
@@ -131,7 +131,7 @@ class ConfigTest < Minitest::Test
       Config.new(VALID_OPTIONS.merge(
                    charger_price_comparison_hour_start: -1,
                    charger_price_comparison_hour_end: 10,
-      ))
+                 ))
     end
 
     # End hour too high
@@ -139,7 +139,7 @@ class ConfigTest < Minitest::Test
       Config.new(VALID_OPTIONS.merge(
                    charger_price_comparison_hour_start: 10,
                    charger_price_comparison_hour_end: 24,
-      ))
+                 ))
     end
   end
 
@@ -149,7 +149,7 @@ class ConfigTest < Minitest::Test
       Config.new(VALID_OPTIONS.merge(
                    charger_price_comparison_hour_start: 10,
                    charger_price_comparison_hour_end: 10,
-      ))
+                 ))
     end
 
     # Start hour after end hour
@@ -157,7 +157,7 @@ class ConfigTest < Minitest::Test
       Config.new(VALID_OPTIONS.merge(
                    charger_price_comparison_hour_start: 12,
                    charger_price_comparison_hour_end: 10,
-      ))
+                 ))
     end
   end
 end

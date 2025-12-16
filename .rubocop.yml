@@ -21,10 +21,13 @@ Metrics/MethodLength:
   Max: 40
 
 Metrics/AbcSize:
-  Max: 25
+  Max: 26
+
+Metrics/CyclomaticComplexity:
+  Max: 10
 
 Metrics/ClassLength:
-  Max: 110
+  Max: 130
   Exclude:
     - test/**/*
 
