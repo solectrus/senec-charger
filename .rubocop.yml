@@ -48,3 +48,6 @@ Layout/FirstArrayElementIndentation:
 
 Minitest/MultipleAssertions:
   Enabled: false
+
+Layout/EndOfLine:
+  Enabled: false
