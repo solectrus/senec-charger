@@ -1,6 +1,14 @@
 services:
   senec-charger:
+
+    # OPTION A: Use to use latest official built
     image: ghcr.io/solectrus/senec-charger:latest
+
+    # OPTION B: Use local build with local .env file
+    # build: .
+    # env_file:
+    #  - .env
+
     depends_on:
       influxdb:
         condition: service_healthy
