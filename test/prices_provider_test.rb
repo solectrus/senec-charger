@@ -33,13 +33,19 @@ class PricesProviderTest < Minitest::Test
 
   def test_to_s
     VCR.use_cassette('prices_success') do
-      # Test with actual data from cassette, regardless of current time
       output = prices_provider.to_s
 
-      assert_match(/Checked prices between/, output)
-      assert_match(/Best 4-hour range:/, output)
-      assert_match(%r{Ratio best/average:}, output)
-      assert_match(/⌀ \d+\.\d+/, output)
+      # Verify the structure of the new multi-line log
+      # Line 1: Basic info
+      assert_match(/Checked prices \d{2}:\d{2}-\d{2}:\d{2}/, output)
+      assert_match(/Ref Ø \d+\.\d+/, output)
+
+      # Line 2: Best slot
+      assert_match(/Best slot: \d{2}:\d{2} - \d{2}:\d{2} @ \d+\.\d+/, output)
+
+      # Line 3: Decision logic
+      assert_match(/Decision:  \d+\.\d+% of Ref/, output)
+      assert_match(/-> (CHEAP|EXPENSIVE)/, output)
     end
   end
 
@@ -47,8 +53,20 @@ class PricesProviderTest < Minitest::Test
     # Travel to a time where we don't have any prices
     Timecop.travel('2023-05-02 12:10:00 +0200') do
       VCR.use_cassette('prices_blank') do
-        assert_equal 'No prices found between 2023-05-02 12:00:00 +0200 and 2023-05-03 12:00:00 +0200',
-                     prices_provider.to_s
+        # UPDATE: Expect the new simple message
+        assert_equal 'No prices available', prices_provider.to_s
+      end
+    end
+  end
+
+  def test_to_s_with_filter
+    # Verify that the log explicitly mentions the filter when active
+    config.stub :charger_price_comparison_hour_start, 6 do
+      config.stub :charger_price_comparison_hour_end, 20 do
+        VCR.use_cassette('prices_success') do
+          output = prices_provider.to_s
+          assert_match(/\(filtered 6:00-20:00\)/, output)
+        end
       end
     end
   end

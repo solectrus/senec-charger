@@ -43,16 +43,43 @@ class PricesProvider
     average(prices)
   end
 
-  def to_s # rubocop:disable Metrics/AbcSize
-    if prices.any?
-      <<~RESULT
-        Checked prices between #{prices.first.time.strftime('%A, %H:%M')} - #{end_time(prices).strftime('%A, %H:%M')}, ⌀ #{prices_average.round(2)}
-        Best #{config.charger_price_time_range}-hour range: #{best_prices.first.time.strftime('%A, %H:%M')} - #{end_time(best_prices).strftime('%A, %H:%M')}, ⌀ #{best_prices_average.round(2)}
-        Ratio best/average: #{(best_prices_average * 100 / prices_average).round(1)} %
-      RESULT
-    else
-      "No prices found between #{range_start} and #{range_stop}"
+  def to_s
+    subset = comparison_prices
+    return 'No prices available' if subset.empty?
+
+    ref_price = (comparison_average || prices_average).round(3)
+
+    # Combine the summaries
+    range_summary(subset, ref_price) + best_slot_summary(ref_price)
+  end
+
+  def range_summary(subset, ref_price)
+    start_time = subset.first.time.strftime('%H:%M')
+    end_time = subset.last.time.strftime('%H:%M')
+
+    msg = "Checked prices #{start_time}-#{end_time}"
+
+    if config.charger_price_comparison_hour_start
+      msg += " (filtered #{config.charger_price_comparison_hour_start}:00-#{config.charger_price_comparison_hour_end}:00)"
     end
+
+    msg + ", Ref Ø #{ref_price}"
+  end
+
+  def best_slot_summary(ref_price)
+    return '' unless best_prices&.any?
+
+    best_avg = best_prices_average.round(3)
+    slot_start = best_prices.first.time.strftime('%H:%M')
+    slot_end = best_prices.last.time.strftime('%H:%M')
+
+    # Calculate Ratio and Decision
+    ratio = ((best_avg / ref_price) * 100).round(1)
+    target_price = (ref_price * config.charger_price_max / 100).round(3)
+    is_cheap = best_avg <= target_price
+
+    "\n    Best slot: #{slot_start} - #{slot_end} @ #{best_avg}" \
+      "\n    Decision:  #{ratio}% of Ref (Limit #{config.charger_price_max}% / < #{target_price}) -> #{is_cheap ? 'CHEAP' : 'EXPENSIVE'}"
   end
 
   def end_time(price_list)
