@@ -129,6 +129,10 @@ class PricesProviderTest < Minitest::Test
         end
       end
     end
+
+    # This prevents local .env settings from breaking standard tests
+    @config.charger_price_comparison_hour_start = nil
+    @config.charger_price_comparison_hour_end = nil
   end
 
   private
