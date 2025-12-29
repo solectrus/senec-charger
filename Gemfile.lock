@@ -6,6 +6,7 @@ GEM
     ast (2.4.3)
     base64 (0.3.0)
     bigdecimal (4.0.1)
+    cgi (0.5.1)
     climate_control (1.2.0)
     connection_pool (2.5.5)
     crack (1.0.1)
@@ -124,6 +125,7 @@ PLATFORMS
 
 DEPENDENCIES
   base64
+  cgi
   climate_control
   csv
   dotenv
@@ -142,4 +144,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   2.7.2
+  4.0.3
