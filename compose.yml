@@ -1,6 +1,14 @@
 services:
   senec-charger:
+
+    # OPTION A: Use to use latest official built
     image: ghcr.io/solectrus/senec-charger:latest
+
+    # OPTION B: Use local build with local .env file
+    # build: .
+    # env_file:
+    #  - .env
+
     depends_on:
       influxdb:
         condition: service_healthy
@@ -14,6 +22,8 @@ services:
       - CHARGER_PRICE_MAX
       - CHARGER_PRICE_TIME_RANGE
       - CHARGER_FORECAST_THRESHOLD
+      - CHARGER_PRICE_COMPARISON_HOUR_START
+      - CHARGER_PRICE_COMPARISON_HOUR_END
       - CHARGER_DRY_RUN
       - INFLUX_HOST=influxdb
       - INFLUX_TOKEN=${INFLUX_TOKEN_READ}

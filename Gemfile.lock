@@ -26,6 +26,7 @@ GEM
       net-http-persistent (>= 4.0.4, < 5)
     faraday-request-timer (0.2.0)
       faraday (>= 0.9.0)
+    fiddle (1.1.6)
     hashdiff (1.2.1)
     hashie (5.1.0)
       logger
@@ -122,6 +123,7 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw-ucrt
 
 DEPENDENCIES
   base64
@@ -129,6 +131,7 @@ DEPENDENCIES
   climate_control
   csv
   dotenv
+  fiddle
   influxdb-client
   minitest
   minitest-silence

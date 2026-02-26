@@ -54,4 +54,7 @@ group :development, :test do
 
   # A gem providing "time travel" and "time freezing" capabilities, making it dead simple to test time-dependent code.  It provides a unified method to mock Time.now, Date.today, and DateTime.now in a single call. (https://github.com/travisjeffery/timecop)
   gem 'timecop'
+
+  # Used for interacting with C libraries (moved out of the default standard library in Ruby 3.4)
+  gem 'fiddle'
 end
