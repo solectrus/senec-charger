@@ -15,9 +15,8 @@ Config =
     :influx_bucket,
     :influx_measurement_prices,
     :influx_measurement_forecast,
-    keyword_init: true,
   ) do
-    def initialize(*options)
+    def initialize(**)
       super
 
       validate_url!(senec_url)
@@ -72,28 +71,27 @@ Config =
 
     def self.from_env(options = {})
       new(
-        {
-          senec_host: ENV.fetch('SENEC_HOST'),
-          senec_schema: ENV.fetch('SENEC_SCHEMA', 'https'),
-          charger_interval: ENV.fetch('CHARGER_INTERVAL', '3600').to_i,
-          charger_price_max:
-            ENV.fetch('CHARGER_PRICE_MAX', '70').to_i,
-          charger_price_time_range:
-            ENV.fetch('CHARGER_PRICE_TIME_RANGE', '4').to_i,
-          charger_forecast_threshold:
-            ENV.fetch('CHARGER_FORECAST_THRESHOLD', '20').to_i,
-          charger_dry_run: ENV.fetch('CHARGER_DRY_RUN', 'false') == 'true',
-          influx_host: ENV.fetch('INFLUX_HOST'),
-          influx_schema: ENV.fetch('INFLUX_SCHEMA', 'http'),
-          influx_port: ENV.fetch('INFLUX_PORT', '8086'),
-          influx_token: ENV.fetch('INFLUX_TOKEN'),
-          influx_org: ENV.fetch('INFLUX_ORG'),
-          influx_bucket: ENV.fetch('INFLUX_BUCKET'),
-          influx_measurement_prices:
-            ENV.fetch('INFLUX_MEASUREMENT_PRICES', 'Prices'),
-          influx_measurement_forecast:
-            ENV.fetch('INFLUX_MEASUREMENT_FORECAST', 'Forecast'),
-        }.merge(options),
+        senec_host: ENV.fetch('SENEC_HOST'),
+        senec_schema: ENV.fetch('SENEC_SCHEMA', 'https'),
+        charger_interval: ENV.fetch('CHARGER_INTERVAL', '3600').to_i,
+        charger_price_max:
+          ENV.fetch('CHARGER_PRICE_MAX', '70').to_i,
+        charger_price_time_range:
+          ENV.fetch('CHARGER_PRICE_TIME_RANGE', '4').to_i,
+        charger_forecast_threshold:
+          ENV.fetch('CHARGER_FORECAST_THRESHOLD', '20').to_i,
+        charger_dry_run: ENV.fetch('CHARGER_DRY_RUN', 'false') == 'true',
+        influx_host: ENV.fetch('INFLUX_HOST'),
+        influx_schema: ENV.fetch('INFLUX_SCHEMA', 'http'),
+        influx_port: ENV.fetch('INFLUX_PORT', '8086'),
+        influx_token: ENV.fetch('INFLUX_TOKEN'),
+        influx_org: ENV.fetch('INFLUX_ORG'),
+        influx_bucket: ENV.fetch('INFLUX_BUCKET'),
+        influx_measurement_prices:
+          ENV.fetch('INFLUX_MEASUREMENT_PRICES', 'Prices'),
+        influx_measurement_forecast:
+          ENV.fetch('INFLUX_MEASUREMENT_FORECAST', 'Forecast'),
+        **options,
       )
     end
   end

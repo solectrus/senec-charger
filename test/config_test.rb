@@ -19,17 +19,17 @@ class ConfigTest < Minitest::Test
   }.freeze
 
   def test_valid_options
-    Config.new(VALID_OPTIONS)
+    Config.new(**VALID_OPTIONS)
   end
 
   def test_invalid_options_blank
-    assert_raises(Exception) { Config.new({}) }
+    assert_raises(Exception) { Config.new }
   end
 
   def test_invalid_options_charger_interval
     error =
       assert_raises(Exception) do
-        Config.new(VALID_OPTIONS.merge(charger_interval: 0))
+        Config.new(**VALID_OPTIONS, charger_interval: 0)
       end
 
     assert_match(/Interval is invalid/, error.message)
@@ -38,7 +38,7 @@ class ConfigTest < Minitest::Test
   def test_invalid_options_influx_schema
     error =
       assert_raises(Exception) do
-        Config.new(VALID_OPTIONS.merge(influx_schema: 'foo'))
+        Config.new(**VALID_OPTIONS, influx_schema: 'foo')
       end
 
     assert_match(/URL is invalid/, error.message)
@@ -47,7 +47,7 @@ class ConfigTest < Minitest::Test
   def test_invalid_options_price_max
     error =
       assert_raises(Exception) do
-        Config.new(VALID_OPTIONS.merge(charger_price_max: 105))
+        Config.new(**VALID_OPTIONS, charger_price_max: 105)
       end
 
     assert_match(/Price max is invalid/, error.message)
@@ -56,7 +56,7 @@ class ConfigTest < Minitest::Test
   def test_invalid_options_price_time_range
     error =
       assert_raises(Exception) do
-        Config.new(VALID_OPTIONS.merge(charger_price_time_range: '-2'))
+        Config.new(**VALID_OPTIONS, charger_price_time_range: '-2')
       end
 
     assert_match(/Time range is invalid/, error.message)
@@ -65,20 +65,20 @@ class ConfigTest < Minitest::Test
   def test_invalid_options_forecast_threshold
     error =
       assert_raises(Exception) do
-        Config.new(VALID_OPTIONS.merge(charger_forecast_threshold: '-20'))
+        Config.new(**VALID_OPTIONS, charger_forecast_threshold: '-20')
       end
 
     assert_match(/Forecast threshold is invalid/, error.message)
   end
 
   def test_senec_methods
-    config = Config.new(VALID_OPTIONS)
+    config = Config.new(**VALID_OPTIONS)
 
     assert_equal 1800, config.charger_interval
   end
 
   def test_influx_methods
-    config = Config.new(VALID_OPTIONS)
+    config = Config.new(**VALID_OPTIONS)
 
     assert_equal 'influx.example.com', config.influx_host
     assert_equal 'https', config.influx_schema
