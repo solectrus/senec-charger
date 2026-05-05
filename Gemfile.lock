@@ -40,7 +40,7 @@ GEM
     minitest (5.27.0)
     minitest-silence (0.2.4)
       minitest (~> 5.12)
-    multi_xml (0.9.0)
+    multi_xml (0.9.1)
       bigdecimal (>= 3.1, < 5)
     net-http (0.9.1)
       uri (>= 0.11.1)
