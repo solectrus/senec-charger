@@ -23,7 +23,7 @@ class Loop
     loop do
       self.count += 1
 
-      puts "##{self.count} - #{Time.now}"
+      puts "##{count} - #{Time.now}"
       perform!
 
       break if max_count && count >= max_count
