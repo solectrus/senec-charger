@@ -111,7 +111,7 @@ GEM
     timecop (0.9.11)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
-    unicode-emoji (4.2.0)
+    unicode-emoji (4.3.0)
     uri (1.1.1)
     vcr (6.4.0)
     version_gem (1.1.15)
