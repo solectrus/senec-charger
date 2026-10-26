@@ -51,6 +51,10 @@ jobs:
     needs: test
     if: ${{ github.triggering_actor != 'dependabot[bot]' }}
 
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout the code
         uses: actions/checkout@v7
@@ -90,7 +94,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.CR_PAT }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
         uses: docker/build-push-action@v7
