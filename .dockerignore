@@ -12,6 +12,5 @@
 compose.yml
 coverage
 Dockerfile
-Guardfile
 Rakefile
 test
